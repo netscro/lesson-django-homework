@@ -15,7 +15,7 @@ def home(request):
 
 def main_page(request):
     """
-    This is maim page '/'
+    This is main page '/'
     :param request: output 'Hello, this is a home page :)'
     :return: Hello, this is a home page :)
     """
