@@ -30,5 +30,11 @@ def students(request):
     :return: information of all students
     """
     student_data = Student()
+    student_data.name = 'Jeka'
+    student_data.surname = 'Kovalev'
+    # student_data.save()
 
-    return render(request, 'students.html')
+
+    all_students = Student.objects.all()
+
+    return render(request, 'students.html', context={'all_students': all_students})
