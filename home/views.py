@@ -19,4 +19,4 @@ def main_page(request):
     :param request: output 'Hello, this is a home page :)'
     :return: Hello, this is a home page :)
     """
-    return HttpResponse('<h1>Hello, this is a home page :)</h1>')
+    return render(request, 'index.html')
