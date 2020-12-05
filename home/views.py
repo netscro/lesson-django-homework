@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
+from home.models import Student
 
 
 def home(request):
@@ -20,3 +21,14 @@ def main_page(request):
     :return: Hello, this is a home page :)
     """
     return render(request, 'index.html')
+
+
+def students(request):
+    """
+    This page print information about all students in database
+    :param request: output 'students.html'
+    :return: information of all students
+    """
+    student_data = Student()
+
+    return render(request, 'students.html')
