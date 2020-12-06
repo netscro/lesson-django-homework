@@ -30,8 +30,8 @@ def students(request):
     :return: information of all students
     """
     student_data = Student()
-    student_data.name = 'Jeka'
-    student_data.surname = 'Kovalev'
+    # student_data.name = 'Jeka'
+    # student_data.surname = 'Kovalev'
     # student_data.save()
 
 

@@ -5,8 +5,14 @@ from django.db import models
 
 class Student(models.Model):
     """
-    Student data of all students in database
+    Students data fields in database
     """
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=200)
+    age = models.IntegerField(null=True)
+    sex = models.CharField(max_length=50, null=True)
+    address = models.CharField(max_length=200, null=True)
+    description = models.TextField(null=True)
+    birthday = models.DateField(null=True)
+    email = models.CharField(max_length=200, null=True)
