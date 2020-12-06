@@ -1,11 +1,11 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 # Create your views here.
 from home.models import Student
 
 
-def home(request):
+def home(request):  # noqa
     """
     This is page 'home/'
     :param request: output 'Hello world!'
@@ -29,12 +29,7 @@ def students(request):
     :param request: output 'students.html'
     :return: information of all students
     """
-    student_data = Student()
-    # student_data.name = 'Jeka'
-    # student_data.surname = 'Kovalev'
-    # student_data.save()
-
-
+    student_data = Student()  # noqa
     all_students = Student.objects.all()
-
-    return render(request, 'students.html', context={'all_students': all_students})
+    return render(request, 'students.html',
+                  context={'all_students': all_students})

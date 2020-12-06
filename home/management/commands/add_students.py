@@ -1,12 +1,12 @@
 from django.core.management import BaseCommand
-from home.models import Student
 from faker import Faker
-from datetime import datetime
+
+from home.models import Student
 
 
 class Command(BaseCommand):
 
-    help = 'Add new student in to the database'
+    help = 'Add new student in to the database'  # noqa
 
     def add_arguments(self, parser):
         """
@@ -16,7 +16,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """
-        In a loop, prints the specified number of students in func "add_arguments"
+        In a loop, prints the specified
+        number of students in func "add_arguments"
         """
         faker = Faker()
 
@@ -32,4 +33,3 @@ class Command(BaseCommand):
             student.email = faker.email()
 
             student.save()
-
