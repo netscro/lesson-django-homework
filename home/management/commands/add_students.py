@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from faker import Faker
+from faker import Faker  # noqa
 
 from home.models import Student
 
