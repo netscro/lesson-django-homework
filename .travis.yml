@@ -8,8 +8,9 @@ python:
   - "3.8"
 
 install:
-  - pip install -r requirements.txt
   - pip install --upgrade pip
+  - pip install -r requirements.txt
+
 
 script:
   - flake8 ./
