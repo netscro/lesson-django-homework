@@ -21,8 +21,8 @@ from home.views import home, main_page, students
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('home/', home),
-    path('', main_page),
+    path('home/', home, name='home'),
+    path('', main_page, name='main_page'),
     path('students/', students, name='students'),
 
 ]

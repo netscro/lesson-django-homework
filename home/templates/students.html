@@ -13,7 +13,8 @@
         Surname = {{ one_student.surname }};
         Age = {{ one_student.age }};
         Sex = {{ one_student.sex }};
-        Birthday = {{ one_student.birthday }};
+        Site = <a href="{{ one_student.social_url }}">{{ one_student.social_url }}</a>
+
         <br>
         {% endfor %}
 </p>
