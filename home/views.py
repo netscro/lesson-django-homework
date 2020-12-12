@@ -31,7 +31,6 @@ def students(request):
     :param request: output 'students.html'
     :return: information of all students
     """
-    student_data = Student()  # noqa
     all_students = Student.objects.all()  # noqa
 
     if request.method == 'GET':
