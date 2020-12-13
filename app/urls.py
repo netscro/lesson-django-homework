@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from home.views import home, main_page, students, student_update, students_info
+from home.views import home, main_page, students, student_update,\
+    students_info, student_update_main
 
 urlpatterns = [
 
@@ -25,8 +26,7 @@ urlpatterns = [
     path('', main_page, name='main_page'),
     path('students/', students, name='students'),
     path('student-update/<id>/', student_update, name='student_update'),
+    path('student-update/', student_update_main, name='student_update_main'),
     path('students-info/', students_info, name='students_info'),
-
-
 
 ]

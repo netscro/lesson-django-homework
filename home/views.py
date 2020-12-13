@@ -46,10 +46,10 @@ def students(request):
             students_add_form.save()
             return redirect(reverse('students'))
         else:
-            return HttpResponseBadRequest('Некорректно заполнены в форме')
+            return HttpResponseBadRequest('Некорректно заполнены данные в форме')
 
 
-def student_update(request, id):
+def student_update(request, id):  # noqa
     """
     This page updated information of students
     :param request:
@@ -57,7 +57,7 @@ def student_update(request, id):
     :return: updated students info page
     """
     if request.method == 'GET':
-        student = Student.objects.get(id=id)
+        student = Student.objects.get(id=id)  # noqa
         one_student_form = StudentsAddForm(instance=student)
 
         context = {'form': one_student_form, 'student_id': student.id,
@@ -66,13 +66,13 @@ def student_update(request, id):
         return render(request, 'student_update.html', context=context)
 
     elif request.method == 'POST':
-        student = Student.objects.get(id=id)
+        student = Student.objects.get(id=id)  # noqa
         one_student_form = StudentsAddForm(request.POST, instance=student)
         if one_student_form.is_valid():
             one_student_form.save()
             return redirect(reverse('students_info'))
         else:
-            return redirect('/students-info/')
+            return HttpResponseBadRequest('Некорректно заполнены данные в форме')
 
 
 def students_info(request):
@@ -97,3 +97,12 @@ def students_info(request):
             return redirect(reverse('students_info'))
         else:
             return HttpResponseBadRequest('Некорректно заполнены данные в форме')
+
+
+def student_update_main(request): # noqa
+    """
+    Redirect /student-update/ page to /students-info/
+    :param request: output 'students-info.html'
+    :return: prints /students-info/ page
+    """
+    return redirect(reverse('students_info'))
