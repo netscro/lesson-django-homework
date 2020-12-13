@@ -7,4 +7,4 @@ class StudentsAddForm(ModelForm):
 
     class Meta:
         model = Student
-        fields = ['name', 'age', 'description', 'social_url']
+        fields = ['name', 'surname', 'age', 'description', 'social_url']
