@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Информация о студентах в базе данных</title>
+    <title>Форма изменения данных студента</title>
 </head>
 <body>
         <h1>Данные всех студентов</h1>
@@ -19,7 +19,7 @@
         {% endfor %}
 </p>
         <br>
-        <form method="POST" action="{% url 'students' %}">
+        <form method="POST" action="{% url 'students_update' %}">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit">

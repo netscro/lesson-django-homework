@@ -32,5 +32,5 @@ class Command(BaseCommand):
             student.birthday = faker.date_between()
             student.email = faker.email()
             # student.social_url = faker.profile()['website']
-            student.social_url = f'https://{faker.domain_name()}'
+            student.social_url = f'http://{faker.domain_name()}'
             student.save()

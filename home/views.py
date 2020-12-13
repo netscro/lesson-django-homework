@@ -47,3 +47,51 @@ def students(request):
             return redirect(reverse('students'))
         else:
             return HttpResponseBadRequest('Некорректно заполнены в форме')
+
+
+def students_update(request, id):
+    """
+    This page updated information of students
+    :param request:
+    :param id: id of student in database
+    :return: updated stents info page
+    """
+    all_students = Student.objects.all()
+
+    if request.method == 'GET':
+        student = Student.objects.get(id=id)
+        one_student_form = StudentsAddForm(instance=student)
+
+        context = {'student': student, 'all_students': all_students,
+                   'form': one_student_form}
+        return render(request, 'students_update.html', context=context)
+
+    elif request.method == 'POST':
+        student = Student.objects.get(id=id)
+        one_student_form = StudentsAddForm(request.POST, instance=student)
+        one_student_form.save()
+        return redirect(reverse('students_update'))
+
+
+def students_info(request):
+    """
+    This page print name all students in database
+    :param request: output 'students-info.html'
+    :return: name of all students
+    """
+    all_students = Student.objects.all()  # noqa
+
+    if request.method == 'GET':
+        students_add_form = StudentsAddForm()
+
+        return render(request, 'students_info.html',
+                      context={'all_students': all_students,
+                               'form': students_add_form})
+
+    elif request.method == 'POST':
+        students_add_form = StudentsAddForm(request.POST)
+        if students_add_form.is_valid():
+            students_add_form.save()
+            return redirect(reverse('students_info'))
+        else:
+            return HttpResponseBadRequest('Некорректно заполнены в форме')

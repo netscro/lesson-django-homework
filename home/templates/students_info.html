@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Форма изменения данных студента</title>
+</head>
+<body>
+        <h1>Данные всех студентов</h1>
+<p>
+        {% for one_student in all_students %}
+        <li>
+            <a href="{% url 'students_update' %}{{one_student.id}}">
+                {{ one_student.name }}
+                {{ one_student.surname }}</a>
+                Social url = <a href="{{ one_student.social_url }}">{{ one_student.social_url }}</a>
+
+        </li>
+        {% endfor %}
+
+</body>

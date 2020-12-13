@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from home.views import home, main_page, students
+from home.views import home, main_page, students, students_update, students_info
 
 urlpatterns = [
 
@@ -24,5 +24,9 @@ urlpatterns = [
     path('home/', home, name='home'),
     path('', main_page, name='main_page'),
     path('students/', students, name='students'),
+    path('students-update/', students_update, name='students_update'),
+    path('students-info/', students_info, name='students_info'),
+
+
 
 ]
