@@ -9,7 +9,7 @@
 <p>
         {% for one_student in all_students %}
         <li>
-            <a href="/student-update/{{one_student.id}}/">
+                <a href="{% url 'student_update' id=one_student.id %}">
                 {{ one_student.name }}
                 {{ one_student.surname }}</a>
                 Social url = <a href="{{ one_student.social_url }}">{{ one_student.social_url }}</a>
