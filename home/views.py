@@ -1,7 +1,9 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import redirect, render
 # Create your views here.
+from django.urls import reverse
+
+from home.forms import StudentsAddForm
 from home.models import Student
 
 
@@ -29,7 +31,19 @@ def students(request):
     :param request: output 'students.html'
     :return: information of all students
     """
-    student_data = Student()  # noqa
-    all_students = Student.objects.all()
-    return render(request, 'students.html',
-                  context={'all_students': all_students})
+    all_students = Student.objects.all()  # noqa
+
+    if request.method == 'GET':
+        students_add_form = StudentsAddForm()
+
+        return render(request, 'students.html',
+                      context={'all_students': all_students,
+                               'form': students_add_form})
+
+    elif request.method == 'POST':
+        students_add_form = StudentsAddForm(request.POST)
+        if students_add_form.is_valid():
+            students_add_form.save()
+            return redirect(reverse('students'))
+        else:
+            return HttpResponseBadRequest('Некорректно заполнены в форме')
