@@ -49,7 +49,8 @@ def students(request):  # работает через функцию
             students_add_form.save()
             return redirect(reverse('students'))
         else:
-            return HttpResponseBadRequest('Некорректно заполнены данные в форме')
+            return HttpResponseBadRequest('Некорректно'
+                                          ' заполнены данные в форме')
 
 
 class StudentUpdateMain(View):
@@ -78,7 +79,8 @@ class StudentUpdate(View):
         student = self.get_student(id)  # noqa
         one_student_form = StudentsAddForm(instance=student)
         context = {'form': one_student_form, 'student_id': student.id,
-                   'student_name': student.name, 'student_surname': student.surname, }
+                   'student_name': student.name,
+                   'student_surname': student.surname, }
         return render(request, 'student_update.html', context=context)
 
     def post(self, request, id): # noqa
@@ -88,7 +90,8 @@ class StudentUpdate(View):
             one_student_form.save()
             return redirect(reverse('students_info'))
         else:
-            return HttpResponseBadRequest('Некорректно заполнены данные в форме')
+            return HttpResponseBadRequest('Некорректно '
+                                          'заполнены данные в форме')
 
 
 class StudentsInfo(View):
@@ -112,4 +115,5 @@ class StudentsInfo(View):
             students_add_form.save()
             return redirect(reverse('students_info'))
         else:
-            return HttpResponseBadRequest('Некорректно заполнены данные в форме')
+            return HttpResponseBadRequest('Некорректно '
+                                          'заполнены данные в форме')
