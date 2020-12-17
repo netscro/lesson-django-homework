@@ -14,13 +14,11 @@ class StudentAdmin(ModelAdmin):
 
     def students(self, object):
 
-        field_name = format_html("<a href='{}' target='_blank'>{} {}</a>", object.social_url, object.name,
-                                 object.surname)
-
         if not object.social_url:
             return f'{object.name} {object.surname}'
         else:
-            return field_name
+            return format_html("<a href='{}' target='_blank'>{} {}</a>", object.social_url, object.name,
+                                 object.surname)
 
 
 admin.site.register(Student, StudentAdmin)

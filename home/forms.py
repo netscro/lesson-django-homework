@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from home.models import Student
 
 
-class StudentsAddForm(ModelForm):
+class StudentForm(ModelForm):
 
     class Meta:
         model = Student

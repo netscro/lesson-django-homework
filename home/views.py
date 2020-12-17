@@ -1,10 +1,10 @@
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 # Create your views here.
 from django.urls import reverse
 from django.views import View
 
-from home.forms import StudentsAddForm
+from home.forms import StudentForm
 from home.models import Student
 
 
@@ -37,14 +37,14 @@ def students(request):  # работает через функцию
     all_students = Student.objects.all()  # noqa
 
     if request.method == 'GET':
-        students_add_form = StudentsAddForm()
+        students_add_form = StudentForm()
 
         return render(request, 'students.html',
                       context={'all_students': all_students,
                                'form': students_add_form})
 
     elif request.method == 'POST':
-        students_add_form = StudentsAddForm(request.POST)
+        students_add_form = StudentForm(request.POST)
         if students_add_form.is_valid():
             students_add_form.save()
             return redirect(reverse('students'))
@@ -73,21 +73,19 @@ class StudentUpdate(View):
     """
 
     def get_student(self, id): # noqa
-        return Student.objects.get(id=id) # noqa
+        return get_object_or_404(Student, id=id)
 
     def get(self, request, id): # noqa
         student = self.get_student(id)  # noqa
-        one_student_form = StudentsAddForm(instance=student)
-        context = {'form': one_student_form, 'student_id': student.id,
-                   'student_name': student.name,
-                   'student_surname': student.surname, }
+        student_form = StudentForm(instance=student)
+        context = {'form': student_form, 'student': student}
         return render(request, 'student_update.html', context=context)
 
     def post(self, request, id): # noqa
         student = self.get_student(id)  # noqa
-        one_student_form = StudentsAddForm(request.POST, instance=student)
-        if one_student_form.is_valid():
-            one_student_form.save()
+        student_form = StudentForm(request.POST, instance=student)
+        if student_form.is_valid():
+            student_form.save()
             return redirect(reverse('students_info'))
         else:
             return HttpResponseBadRequest('Некорректно '
@@ -97,20 +95,18 @@ class StudentUpdate(View):
 class StudentsInfo(View):
     """
     This page print name all students in database
-    #:param request: output 'students-info.html'
-    #:return: name of all students
-     """
+    """
 
     def get(self, request): # noqa
         all_students = Student.objects.all()  # noqa
-        students_add_form = StudentsAddForm()
+        students_add_form = StudentForm()
 
         return render(request, 'students_info.html',
                       context={'all_students': all_students,
                                'form': students_add_form})
 
     def post(self, request): # noqa
-        students_add_form = StudentsAddForm(request.POST)
+        students_add_form = StudentForm(request.POST)
         if students_add_form.is_valid():
             students_add_form.save()
             return redirect(reverse('students_info'))
