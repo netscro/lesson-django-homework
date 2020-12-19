@@ -1,3 +1,3 @@
-# lesson6-django-hello-world
+Django
 
-Homework №5 to lesson 6
+Homework Django
