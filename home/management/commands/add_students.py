@@ -33,5 +33,4 @@ class Command(BaseCommand):
             student.email = faker.email()
             student.social_url = f'http://{faker.domain_name()}'
             student.is_active = faker.boolean(chance_of_getting_true=50)
-            student.normalized_name = faker.first_name().lower()
             student.save()
