@@ -1,9 +1,19 @@
+import logging
+
+from django.urls import resolve
 from django.utils.deprecation import MiddlewareMixin
 
 
 class LogMiddleware(MiddlewareMixin):
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
+    def process_request(self, request):
+        logging.basicConfig(level=logging.INFO)
+        resolved_path_info = resolve(request.path_info)
+        logging.info(f'Request --> {request}; View name --> '
+                     f'{resolved_path_info.view_name}; '
+                     f'route --> {resolved_path_info.route}')
 
-        print(f'Тест мидлварки - {view_func}')
-        return view_func(request, *view_args, **view_kwargs)
+    def process_response(self, request, response):
+        logging.info(f'For request --> {request}; Response --> {response}')
+        return response
+

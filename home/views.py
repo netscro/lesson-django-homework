@@ -23,7 +23,6 @@ class MainPage(View):
     #:param request: output 'Hello, this is a home page :)'
     #:return: Hello, this is a home page :)
     """
-
     def get(self, request): # noqa
         return render(request, 'index.html')
 
