@@ -11,6 +11,3 @@ def pre_save_normalized_name(sender, instance, **kwargs):  # noqa
 
     name_and_surname = f'{instance.name} {instance.surname}'
     instance.normalized_name = re.sub('[^\w\s]|_', '', name_and_surname).lower()
-
-# также чтобы сигналы начали работать нужно сделать их импорт в apps.py
-# и указать default_app_config в __init__.py приложения
