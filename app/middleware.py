@@ -1,3 +1,4 @@
+import uuid
 import logging
 
 from django.urls import resolve
@@ -17,3 +18,15 @@ class LogMiddleware(MiddlewareMixin):
         logging.info(f'For request --> {request}; Response --> {response}')
         return response
 
+
+class RawDataMiddleware(MiddlewareMixin):
+
+    def process_request(self, request):
+        request.META['id_request'] = uuid.uuid4().hex
+
+
+class IdentifyResponseMiddleware(MiddlewareMixin):
+
+    def process_response(self, request, response):
+        logging.info(f"For request {request} --> Hash is - {request.META['id_request']}")
+        return response
