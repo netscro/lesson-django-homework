@@ -1,5 +1,5 @@
-import uuid
 import logging
+import uuid
 
 from django.urls import resolve
 from django.utils.deprecation import MiddlewareMixin
@@ -28,5 +28,6 @@ class RawDataMiddleware(MiddlewareMixin):
 class IdentifyResponseMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
-        logging.info(f"For request {request} --> Hash is - {request.META['id_request']}")
+        logging.info(f"For request {request} --> "
+                     f"Hash is - {request.META['id_request']}")
         return response
