@@ -11,12 +11,16 @@ from home.models import Student
 def pre_save_normalized_name(sender, instance, **kwargs):  # noqa
 
     name_and_surname = f'{instance.name} {instance.surname}'
-    instance.normalized_name = re.sub('[^\w\s]|_', '', name_and_surname).lower()
+    instance.normalized_name = re.sub(r'[^\w\s]+|[\d]+|_', '', name_and_surname).lower()
 
 
 @receiver(pre_save, sender=Student)
 def pre_save_gender(sender, instance, **kwargs):  # noqa
     define_gender = gender.Detector()
-    instance.sex = define_gender.get_gender(re.sub(r'[^\w\s]+|[\d]+',
+    instance.sex = define_gender.get_gender(re.sub(r'[^\w\s]+|[\d]+|_',
                                                    '', instance.name).replace(' ', ''))
 
+
+@receiver(pre_save, sender=Student)
+def pre_delete_is_active(sender, instance, **kwargs):  # noqa
+    instance.is_active = False
