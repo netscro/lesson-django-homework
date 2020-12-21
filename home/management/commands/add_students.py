@@ -26,11 +26,11 @@ class Command(BaseCommand):
             student.name = faker.first_name()
             student.surname = faker.last_name()
             student.age = faker.random_int(min=18, max=50)
-            student.sex = faker.simple_profile()['sex']
+            # student.sex = faker.simple_profile()['sex']
             student.address = faker.address()
             student.description = faker.text()
             student.birthday = faker.date_between()
             student.email = faker.email()
             student.social_url = f'http://{faker.domain_name()}'
-            student.is_active = faker.boolean(chance_of_getting_true=50)
+            student.is_active = faker.boolean(chance_of_getting_true=100)
             student.save()

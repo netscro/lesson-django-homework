@@ -10,7 +10,7 @@ from home.models import Student
 
 class StudentAdmin(ModelAdmin):
 
-    list_display = ('email', 'students', 'birthday')
+    list_display = ('email', 'students', 'birthday', 'is_active')
 
     def students(self, object):
 
