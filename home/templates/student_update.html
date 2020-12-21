@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Форма изменения данных студента - {{student.name}} {{student.surname}}</title>
+</head>
+<body>
+        <h1>Данные студента - {{student.name}} {{student.surname}}</h1>
+
+        <br>
+        <form method="POST" action="{% url 'student_update' id=student.id %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit">
+        </form>
+</body>
