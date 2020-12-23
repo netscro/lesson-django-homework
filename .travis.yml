@@ -4,8 +4,9 @@ python:
 
 install:
   - pip install --upgrade pip
-  - pip install -r requirements.txt
+  - pip install poetry
+  - poetry install --dev
 
 
 script:
-  - flake8 ./
+  - poetry run flake8
