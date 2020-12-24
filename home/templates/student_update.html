@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Форма изменения данных студента - {{student.name}} {{student.surname}}</title>
-</head>
-<body>
+{% block title %}Форма изменения данных студента - {{student.name}} {{student.surname}}{% endblock %}
+
+{% block body %}
+
         <h1>Данные студента - {{student.name}} {{student.surname}}</h1>
 
         <br>
@@ -13,4 +12,5 @@
                 {{ form }}
                 <input type="submit">
         </form>
-</body>
+
+{% endblock %}

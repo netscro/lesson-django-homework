@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Форма изменения данных студента</title>
-</head>
-<body>
+{% block title %}Форма изменения данных студента{% endblock %}
+
+{% block body %}
+
         <h1>Данные всех студентов</h1>
 <p>
         {% for one_student in all_students %}
@@ -24,4 +23,4 @@
                 <input type="submit">
         </form>
 
-</body>
+{% endblock %}
