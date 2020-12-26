@@ -11,16 +11,15 @@
                 <a href="{% url 'student_update' id=one_student.id %}">
                 {{ one_student.name }}
                 {{ one_student.surname }}</a>
-                Social url ➡ <a href="{{ one_student.social_url }}">{{ one_student.social_url }}</a>
-
+                {{ one_student.description }}
         </li>
         {% endfor %}
-
+{% comment %}
         <br><br><br>
         <form method="POST" action="{% url 'students_info' %}">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit">
         </form>
-
+{% endcomment %}
 {% endblock %}
