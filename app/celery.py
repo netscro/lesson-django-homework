@@ -9,6 +9,6 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 
-@app.task(bind=True)
-def task_test(self):
+@app.task()
+def task_test():
     return 5 + 5
