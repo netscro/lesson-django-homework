@@ -1,7 +1,7 @@
 from django.core.management import BaseCommand
 from faker import Faker  # noqa
 
-from home.models import Student, Subject
+from home.models import Student, Subject, Teacher
 
 
 class Command(BaseCommand):
@@ -24,6 +24,8 @@ class Command(BaseCommand):
         for new_student in range(options['len']):
             subject, _ = Subject.objects.get_or_create(title='Python')
             subject.save()
+            teacher, _ = Teacher.objects.get_or_create(name_surname='Michael Jackson')
+            teacher.save()
 
             student = Student()
             student.name = faker.first_name()
@@ -37,6 +39,7 @@ class Command(BaseCommand):
             student.social_url = f'http://{faker.domain_name()}'
             student.is_active = faker.boolean(chance_of_getting_true=100)
 
-            student.subject = subject
+            student.subject_title = subject
+            student.teacher_name_surname = teacher
 
             student.save()
