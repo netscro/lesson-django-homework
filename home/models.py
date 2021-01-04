@@ -7,7 +7,7 @@ class Student(models.Model):
     """
     Students data fields in database
     """
-    id = models.IntegerField(primary_key=True)  # noqa
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=200)
     age = models.IntegerField(null=True)
@@ -19,3 +19,15 @@ class Student(models.Model):
     social_url = models.URLField(max_length=300, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     normalized_name = models.CharField(max_length=300, null=True, blank=True)
+    #
+    subject = models.ForeignKey('home.Subject', on_delete=models.SET_NULL, null=True)
+
+
+class Subject(models.Model):
+    """
+    Information about the subject which students study
+    """
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=100)
+
+
