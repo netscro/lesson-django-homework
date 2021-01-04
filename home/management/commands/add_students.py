@@ -3,7 +3,7 @@ import uuid
 from django.core.management import BaseCommand
 from faker import Faker  # noqa
 
-from home.models import Student, Subject, Teacher, ReportCard
+from home.models import ReportCard, Student, Subject, Teacher
 
 
 class Command(BaseCommand):
@@ -49,5 +49,3 @@ class Command(BaseCommand):
             student.teacher_name_surname = teacher
             student.report_card_marks = student_marks
             student.save()
-
-
