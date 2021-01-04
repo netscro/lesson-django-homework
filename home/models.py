@@ -22,11 +22,13 @@ class Student(models.Model):
 
     subject_title = models.ForeignKey('home.Subject', on_delete=models.SET_NULL, null=True)
     teacher_name_surname = models.ForeignKey('home.Teacher', on_delete=models.SET_NULL, null=True)
+    report_card_marks = models.OneToOneField('home.ReportCard', on_delete=models.CASCADE, null=True)
 
 
 class Subject(models.Model):
     """
     Information about the subject which students study
+    one to many
     """
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
@@ -35,7 +37,16 @@ class Subject(models.Model):
 class Teacher(models.Model):
     """
     Information about the teacher which study a students
+    one to many
     """
     id = models.IntegerField(primary_key=True)
     name_surname = models.CharField(max_length=200)
 
+
+class ReportCard(models.Model):
+    """
+    Information about the report card of a students
+    one to one
+    """
+    id = models.AutoField(primary_key=True)
+    report_card = models.CharField(max_length=200)
