@@ -45,7 +45,7 @@ class Command(BaseCommand):
             student.social_url = f'http://{faker.domain_name()}'
             student.is_active = faker.boolean(chance_of_getting_true=100)
 
-            student.subject_title = subject
-            student.teacher_name_surname = teacher
-            student.report_card_marks = student_marks
+            student.subject = subject
+            student.teacher = teacher
+            student.report_card = student_marks
             student.save()
