@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import View
 
 from home.forms import StudentForm
-from home.models import Student
+from home.models import Student, ReportCard
 
 
 def home(request):  # noqa - # работает через функцию
@@ -112,3 +112,16 @@ class StudentsInfo(View):
         else:
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
+
+
+class ReportCardInfo(View):
+    """
+    This page updated information of report card of each student
+    #:param request:
+    #:param id: id of report card in database
+    :return: updated students info page
+    """
+    def get(self, request):
+        all_students = Student.objects.all()  # noqa
+        return render(request, 'report_card_info.html',
+                      context={'all_students': all_students})

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
-    StudentUpdateMain, StudentsInfo, home, students  # noqa
+    StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo  # noqa
   # noqa
 urlpatterns = [
 
@@ -30,5 +30,7 @@ urlpatterns = [
     path('student-update/', StudentUpdateMain.as_view(),
          name='student_update_main'),
     path('students-info/', StudentsInfo.as_view(), name='students_info'),
+    path('report-card-info', ReportCardInfo.as_view(),
+         name='report_card_info')
 
 ]
