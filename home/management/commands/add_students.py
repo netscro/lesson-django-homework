@@ -1,7 +1,9 @@
+import uuid
+
 from django.core.management import BaseCommand
 from faker import Faker  # noqa
 
-from home.models import Student
+from home.models import ReportCard, Student, Subject, Teacher
 
 
 class Command(BaseCommand):
@@ -22,6 +24,15 @@ class Command(BaseCommand):
         faker = Faker()
 
         for new_student in range(options['len']):
+            subject, _ = Subject.objects.get_or_create(title='Python') # noqa
+            subject.save()
+            teacher, _ = Teacher.objects.get_or_create(name_surname='Michael Jackson') # noqa
+            teacher.save()
+
+            student_marks = ReportCard()
+            student_marks.report_card = uuid.uuid4()
+            student_marks.save()
+
             student = Student()
             student.name = faker.first_name()
             student.surname = faker.last_name()
@@ -33,4 +44,8 @@ class Command(BaseCommand):
             student.email = faker.email()
             student.social_url = f'http://{faker.domain_name()}'
             student.is_active = faker.boolean(chance_of_getting_true=100)
+
+            student.subject = subject
+            student.teacher = teacher
+            student.report_card = student_marks
             student.save()

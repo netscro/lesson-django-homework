@@ -1,4 +1,5 @@
 [flake8]
 exclude =
     home/tests.py,
-    home/admin.py
+    home/admin.py,
+    home/migrations/*.py

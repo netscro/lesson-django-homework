@@ -7,7 +7,7 @@ class Student(models.Model):
     """
     Students data fields in database
     """
-    id = models.IntegerField(primary_key=True)  # noqa
+    id = models.AutoField(primary_key=True) # noqa - A003
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=200)
     age = models.IntegerField(null=True)
@@ -19,3 +19,38 @@ class Student(models.Model):
     social_url = models.URLField(max_length=300, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     normalized_name = models.CharField(max_length=300, null=True, blank=True)
+
+    subject = models.ForeignKey('home.Subject',
+                                on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey('home.Teacher',
+                                on_delete=models.SET_NULL, null=True)
+    report_card = models.OneToOneField('home.ReportCard',
+                                       on_delete=models.CASCADE,
+                                       null=True)
+
+
+class Subject(models.Model):
+    """
+    Information about the subject which students study
+    one to many
+    """
+    id = models.AutoField(primary_key=True) # noqa - A003
+    title = models.CharField(max_length=100)
+
+
+class Teacher(models.Model):
+    """
+    Information about the teacher which study a students
+    one to many
+    """
+    id = models.AutoField(primary_key=True) # noqa - A003
+    name_surname = models.CharField(max_length=200)
+
+
+class ReportCard(models.Model):
+    """
+    Information about the report card of a students
+    one to one
+    """
+    id = models.AutoField(primary_key=True) # noqa - A003
+    report_card = models.CharField(max_length=200)
