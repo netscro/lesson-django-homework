@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
-from home.forms import StudentForm
+from home.forms import StudentForm, ReportCardForm
 from home.models import Student, ReportCard
 
 
@@ -125,3 +125,24 @@ class ReportCardInfo(View):
         all_students = Student.objects.all()  # noqa
         return render(request, 'report_card_info.html',
                       context={'all_students': all_students})
+
+
+class ReportCardDelete(View):
+    """
+    This page delete report card of a student with POST request
+    """
+
+    def get_report_card_id(self, id): # noqa
+        return get_object_or_404(ReportCard, id=id)
+
+    def get(self, request, id):
+        report_card = self.get_report_card_id(id)
+        report_card_form = ReportCardForm(instance=report_card)
+        context = {'form': report_card_form, 'report_card': report_card}
+        return render(request, 'report_card_delete.html', context=context)
+
+    def post(self, request, id):
+        report_card = self.get_report_card_id(id)
+        report_card_form = ReportCardForm(request.POST, instance=report_card)
+        report_card.delete()
+        return redirect(reverse('report_card_info'), report_card_form=report_card_form)

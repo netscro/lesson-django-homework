@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Зачетка студента - Id: {{report_card.id}}{% endblock %}
+
+{% block body %}
+
+        <h1>Зачетка --> Id: {{report_card.id}}</h1>
+
+        <br>
+        <form method="POST" action="{% url 'report_card_delete' id=report_card.id %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit", value="Удалить зачетку">
+        </form>
+
+{% endblock %}

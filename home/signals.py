@@ -22,8 +22,8 @@ def pre_save_gender(sender, instance, **kwargs):  # noqa
                                                    '', instance.name).replace(' ', ''))  # noqa
 
 
-@receiver(pre_delete, sender=Student)
-def pre_delete_is_active(sender, instance, **kwargs):  # noqa
-    instance.is_active = False
-    instance.save()
-    raise Exception('Student is not deleted')
+# @receiver(pre_delete, sender=Student)
+# def pre_delete_is_active(sender, instance, **kwargs):  # noqa
+#     instance.is_active = False
+#     instance.save()
+#     raise Exception('Student is not deleted')

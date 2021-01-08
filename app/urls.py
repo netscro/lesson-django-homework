@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
-    StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo  # noqa
+    StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo, ReportCardDelete  # noqa
   # noqa
 urlpatterns = [
 
@@ -31,6 +31,8 @@ urlpatterns = [
          name='student_update_main'),
     path('students-info/', StudentsInfo.as_view(), name='students_info'),
     path('report-card-info', ReportCardInfo.as_view(),
-         name='report_card_info')
+         name='report_card_info'),
+    path('report-card-delete/<id>/', ReportCardDelete.as_view(),
+         name='report_card_delete'),
 
 ]
