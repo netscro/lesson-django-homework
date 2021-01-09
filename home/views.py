@@ -146,3 +146,13 @@ class ReportCardDelete(View):
         report_card_form = ReportCardForm(request.POST, instance=report_card)
         report_card.delete()
         return redirect(reverse('report_card_info'), report_card_form=report_card_form)
+
+
+class SubjectInfo(View):
+    """
+    This page updated information of teacher of each student
+    """
+    def get(self, request):
+        all_students = Student.objects.all()  # noqa
+        return render(request, 'subject_info.html',
+                      context={'all_students': all_students})
