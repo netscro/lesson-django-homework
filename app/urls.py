@@ -30,6 +30,7 @@ urlpatterns = [
     path('student-update/', StudentUpdateMain.as_view(),
          name='student_update_main'),
     path('students-info/', StudentsInfo.as_view(), name='students_info'),
+
     path('report-card-info/', ReportCardInfo.as_view(),
          name='report_card_info'),
     path('report-card-delete/<id>/', ReportCardDelete.as_view(),
@@ -37,5 +38,6 @@ urlpatterns = [
 
     path('subject-info/', SubjectInfo.as_view(),
          name='subject_info'),
+
 
 ]

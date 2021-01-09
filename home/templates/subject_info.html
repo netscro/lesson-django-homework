@@ -8,13 +8,20 @@
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Предметы студентов</h1>
 
+                  <br><br><br>
+          <h2 class="fw-light">Добавить нового студента</h2>
+        <form method="POST" action="{% url 'subject_info' %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit">
+        </form>
+
       </div>
     </div>
   </section>
 
 <main>
-
-  <div class="album py-5 bg-light">
+ <div class="album py-5 bg-light">
     <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
   {% for one_student in all_students %}

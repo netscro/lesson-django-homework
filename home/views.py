@@ -1,3 +1,5 @@
+import uuid
+
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
@@ -107,6 +109,9 @@ class StudentsInfo(View):
     def post(self, request): # noqa
         students_add_form = StudentForm(request.POST)
         if students_add_form.is_valid():
+            student_marks = ReportCard()
+            student_marks.report_card = uuid.uuid4()
+            student_marks.save()
             students_add_form.save()
             return redirect(reverse('students_info'))
         else:
@@ -154,5 +159,15 @@ class SubjectInfo(View):
     """
     def get(self, request):
         all_students = Student.objects.all()  # noqa
+        students_add_form = StudentForm()
         return render(request, 'subject_info.html',
-                      context={'all_students': all_students})
+                      context={'all_students': all_students, 'form': students_add_form})
+
+    def post(self, request): # noqa
+        students_add_form = StudentForm(request.POST)
+        if students_add_form.is_valid():
+            students_add_form.save()
+            return redirect(reverse('subject_info'))
+        else:
+            return HttpResponseBadRequest('Некорректно '
+                                          'заполнены данные в форме')
