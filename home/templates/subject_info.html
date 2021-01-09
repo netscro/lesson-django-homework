@@ -35,7 +35,7 @@
               <p class="card-text">{{ one_student.name }} {{ one_student.surname }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'student_update' id=one_student.id %}">
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'subject_delete' id=one_student.id %}">
                 Edit</a></button>
                         <button type="button" class="btn btn-sm btn-outline-secondary">Age: {{ one_student.age }}</button>
                    </div>

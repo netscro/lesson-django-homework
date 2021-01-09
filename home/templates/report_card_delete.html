@@ -4,7 +4,10 @@
 
 {% block body %}
 
-        <h1>Зачетка --> Id: {{report_card.id}}</h1>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Зачетка --> Id: {{report_card.id}}</h1>
 
         <br>
         <form method="POST" action="{% url 'report_card_delete' id=report_card.id %}">
@@ -12,5 +15,11 @@
                 {{ form }}
                 <input type="submit", value="Удалить зачетку">
         </form>
+      </div>
+    </div>
+  </section>
 
 {% endblock %}
+
+
+

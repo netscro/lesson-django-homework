@@ -1,13 +1,11 @@
-import uuid
-
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse
 from django.views import View
 
-from home.forms import StudentForm, ReportCardForm
-from home.models import Student, ReportCard
+from home.forms import StudentForm, ReportCardForm, SubjectInfoForm
+from home.models import Student, ReportCard, Subject
 
 
 def home(request):  # noqa - # работает через функцию
@@ -109,9 +107,6 @@ class StudentsInfo(View):
     def post(self, request): # noqa
         students_add_form = StudentForm(request.POST)
         if students_add_form.is_valid():
-            student_marks = ReportCard()
-            student_marks.report_card = uuid.uuid4()
-            student_marks.save()
             students_add_form.save()
             return redirect(reverse('students_info'))
         else:
@@ -171,3 +166,26 @@ class SubjectInfo(View):
         else:
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
+
+
+class SubjectForm(object):
+    pass
+
+
+class SubjectDelete(View):
+    """
+    This page delete a student of subject
+    """
+
+    def get_student(self, id): # noqa
+        return get_object_or_404(Student, id=id)
+
+    def get(self, request, id): # noqa
+        student = self.get_student(id)  # noqa
+        return render(request, 'subject_delete.html', {'student': student})
+
+    def post(self, request, id): # noqa
+        student = self.get_student(id)  # noqa
+        student.delete()
+        return redirect(reverse('subject_info'))
+
