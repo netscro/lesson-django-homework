@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
-from home.forms import StudentForm, ReportCardForm, SubjectInfoForm
-from home.models import Student, ReportCard, Subject
+from home.forms import StudentForm, ReportCardForm
+from home.models import Student, ReportCard
 
 
 def home(request):  # noqa - # работает через функцию
