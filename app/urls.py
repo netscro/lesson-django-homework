@@ -18,7 +18,7 @@ from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo, ReportCardDelete, SubjectInfo, \
-    SubjectDelete  # noqa
+    SubjectDelete, TeacherInfo  # noqa
   # noqa
 urlpatterns = [
 
@@ -42,5 +42,6 @@ urlpatterns = [
     path('subject-delete/<id>/', SubjectDelete.as_view(),
          name='subject_delete'),
 
-
+    path('teacher-info/', TeacherInfo.as_view(),
+         name='teacher_info'),
 ]

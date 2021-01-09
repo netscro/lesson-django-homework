@@ -189,3 +189,13 @@ class SubjectDelete(View):
         student.delete()
         return redirect(reverse('subject_info'))
 
+
+class TeacherInfo(View):
+    """
+    This page view information of teacher of each student
+    """
+    def get(self, request):
+        all_students = Student.objects.all()  # noqa
+        return render(request, 'teacher_info.html',
+                      context={'all_students': all_students})
+
