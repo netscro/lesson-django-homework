@@ -7,7 +7,12 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Данные всех студентов</h1>
-
+        <br>
+          <h2 class="fw-light">Сортировка:</h2>
+          <form method="GET">
+          {{ filter.form.as_p }}
+            <input type="submit", value="Сортировать" />
+            </form>
       </div>
     </div>
   </section>
@@ -36,7 +41,7 @@
   <div class="album py-5 bg-light">
     <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-  {% for one_student in all_students %}
+  {% for one_student in filter.qs %}
         <div class="col">
           <div class="card shadow-sm">
 

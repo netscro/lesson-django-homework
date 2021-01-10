@@ -60,3 +60,6 @@ class ReportCard(models.Model):
     """
     id = models.AutoField(primary_key=True) # noqa - A003
     report_card = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.report_card

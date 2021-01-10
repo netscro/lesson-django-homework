@@ -1,3 +1,4 @@
+import django_filters
 from django.forms import ModelForm
 
 from home.models import ReportCard, Student, Subject
@@ -23,3 +24,11 @@ class SubjectInfoForm(ModelForm):
     class Meta:
         model = Subject
         fields = ['title']
+
+
+class StudentFilter(django_filters.FilterSet):
+    # name = django_filters.CharFilter(lookup_expr='iexact')
+
+    class Meta:
+        model = Student
+        fields = ['subject', 'teacher', 'report_card']

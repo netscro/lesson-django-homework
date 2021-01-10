@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
-from home.forms import ReportCardForm, StudentForm
+from home.forms import ReportCardForm, StudentForm, StudentFilter
 from home.models import ReportCard, Student
 
 
@@ -102,9 +102,12 @@ class StudentsInfo(View):
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
 
+        filter_student = StudentFilter(request.GET, queryset=all_students)
+
         return render(request, 'students_info.html',
                       context={'all_students': all_students,
-                               'form': students_add_form})
+                               'form': students_add_form,
+                               'filter': filter_student})
 
     def post(self, request): # noqa
         students_add_form = StudentForm(request.POST)
