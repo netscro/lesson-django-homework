@@ -28,7 +28,7 @@ class SubjectInfoForm(ModelForm):
 
 
 class StudentFilter(django_filters.FilterSet):
-    # name = django_filters.CharFilter(lookup_expr='iexact')
+    name = django_filters.CharFilter(lookup_expr='iexact')
 
     class Meta:
         model = Student
