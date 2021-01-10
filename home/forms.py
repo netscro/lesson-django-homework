@@ -1,5 +1,6 @@
-import django_filters
 from django.forms import ModelForm
+
+import django_filters
 
 from home.models import ReportCard, Student, Subject
 

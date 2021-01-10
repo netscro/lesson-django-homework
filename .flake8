@@ -3,3 +3,4 @@ exclude =
     home/tests.py,
     home/admin.py,
     home/migrations/*.py
+    home/forms.py

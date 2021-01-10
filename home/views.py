@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
-from home.forms import ReportCardForm, StudentForm, StudentFilter
+from home.forms import ReportCardForm, StudentFilter, StudentForm
 from home.models import ReportCard, Student
 
 
