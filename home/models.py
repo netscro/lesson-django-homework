@@ -37,6 +37,9 @@ class Subject(models.Model):
     id = models.AutoField(primary_key=True) # noqa - A003
     title = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.title
+
 
 class Teacher(models.Model):
     """
@@ -45,6 +48,9 @@ class Teacher(models.Model):
     """
     id = models.AutoField(primary_key=True) # noqa - A003
     name_surname = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name_surname
 
 
 class ReportCard(models.Model):
