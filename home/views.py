@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
-from home.forms import StudentForm, ReportCardForm
-from home.models import Student, ReportCard
+from home.forms import ReportCardForm, StudentForm
+from home.models import ReportCard, Student
 
 
 def home(request):  # noqa - # работает через функцию
@@ -73,17 +73,17 @@ class StudentUpdate(View):
     :return: updated students info page
     """
 
-    def get_student(self, id): # noqa
+    def get_student(self, id): # noqa - A002 argument "id" is shadowing a python builtin
         return get_object_or_404(Student, id=id)
 
-    def get(self, request, id): # noqa
-        student = self.get_student(id)  # noqa
+    def get(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+        student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(instance=student)
         context = {'form': student_form, 'student': student}
         return render(request, 'student_update.html', context=context)
 
-    def post(self, request, id): # noqa
-        student = self.get_student(id)  # noqa
+    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+        student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(request.POST, instance=student)
         if student_form.is_valid():
             student_form.save()
@@ -134,20 +134,21 @@ class ReportCardDelete(View):
     This page delete report card of a student with POST request
     """
 
-    def get_report_card_id(self, id): # noqa
+    def get_report_card_id(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
         return get_object_or_404(ReportCard, id=id)
 
-    def get(self, request, id):
+    def get(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
         report_card = self.get_report_card_id(id)
         report_card_form = ReportCardForm(instance=report_card)
         context = {'form': report_card_form, 'report_card': report_card}
         return render(request, 'report_card_delete.html', context=context)
 
-    def post(self, request, id):
+    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
         report_card = self.get_report_card_id(id)
         report_card_form = ReportCardForm(request.POST, instance=report_card)
         report_card.delete()
-        return redirect(reverse('report_card_info'), report_card_form=report_card_form)
+        return redirect(reverse('report_card_info'),
+                        report_card_form=report_card_form)
 
 
 class SubjectInfo(View):
@@ -158,7 +159,8 @@ class SubjectInfo(View):
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
         return render(request, 'subject_info.html',
-                      context={'all_students': all_students, 'form': students_add_form})
+                      context={'all_students': all_students,
+                               'form': students_add_form})
 
     def post(self, request):  # noqa
         students_add_form = StudentForm(request.POST)
@@ -183,17 +185,18 @@ class SubjectDelete(View):
     This page delete a student of subject
     """
 
-    def get_student(self, id): # noqa
+    def get_student(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
         return get_object_or_404(Student, id=id)
 
-    def get(self, request, id): # noqa
+    def get(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
-        student = self.get_student(id)  # noqa
-        return render(request, 'subject_delete.html', {'student': student, 'form': students_add_form})
+        student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
+        context = {'student': student, 'form': students_add_form}
+        return render(request, 'subject_delete.html', context=context)
 
-    def post(self, request, id): # noqa
-        student = self.get_student(id)  # noqa
+    def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+        student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
         student.delete()
 
         return redirect(reverse('subject_info'))
@@ -207,7 +210,8 @@ class TeacherInfo(View):
         students_add_form = StudentForm()
         all_students = Student.objects.all()  # noqa
         return render(request, 'teacher_info.html',
-                      context={'all_students': all_students, 'form': students_add_form})
+                      context={'all_students': all_students,
+                               'form': students_add_form})
 
     def post(self, request):  # noqa
         students_add_form = StudentForm(request.POST)
