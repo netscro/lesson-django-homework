@@ -178,10 +178,6 @@ class SubjectInfo(View):
                                           'заполнены данные в форме')
 
 
-class SubjectForm(object):
-    pass
-
-
 class SubjectDelete(View):
     """
     This page delete a student of subject
@@ -191,12 +187,15 @@ class SubjectDelete(View):
         return get_object_or_404(Student, id=id)
 
     def get(self, request, id): # noqa
+        all_students = Student.objects.all()  # noqa
+        students_add_form = StudentForm()
         student = self.get_student(id)  # noqa
-        return render(request, 'subject_delete.html', {'student': student})
+        return render(request, 'subject_delete.html', {'student': student, 'form': students_add_form})
 
     def post(self, request, id): # noqa
         student = self.get_student(id)  # noqa
         student.delete()
+
         return redirect(reverse('subject_info'))
 
 
@@ -205,7 +204,24 @@ class TeacherInfo(View):
     This page view information of teacher of each student
     """
     def get(self, request):
+        students_add_form = StudentForm()
         all_students = Student.objects.all()  # noqa
         return render(request, 'teacher_info.html',
-                      context={'all_students': all_students})
+                      context={'all_students': all_students, 'form': students_add_form})
 
+    def post(self, request):  # noqa
+        students_add_form = StudentForm(request.POST)
+        if students_add_form.is_valid():
+            student = students_add_form.save()
+
+            student_marks = ReportCard()
+            student_marks.report_card = uuid.uuid4()
+            student_marks.save()
+
+            student.report_card = student_marks
+            student.save()
+
+            return redirect(reverse('teacher_info'))
+        else:
+            return HttpResponseBadRequest('Некорректно '
+                                          'заполнены данные в форме')

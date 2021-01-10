@@ -7,6 +7,14 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Учителя студентов</h1>
+          <br>
+          <h2 class="fw-light">Добавить нового студента</h2>
+          <br>
+        <form method="POST" action="{% url 'teacher_info' %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit">
+        </form>
 
       </div>
     </div>
