@@ -63,3 +63,11 @@ class ReportCard(models.Model):
 
     def __str__(self):
         return self.report_card
+
+
+class Currency(models.Model):
+    id = models.AutoField(primary_key=True) # noqa - A003
+    ccy = models.CharField(max_length=100)
+    base_ccy = models.CharField(max_length=100)
+    buy = models.CharField(max_length=100, null=True,)
+    sale = models.CharField(max_length=100, null=True,)
