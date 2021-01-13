@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -136,4 +138,11 @@ STATICFILES_DIRS = [
 ]
 
 CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_RESULT_BACKEND = 'rpc://localhost'
+CELERY_RESULT_BACKEND = 'db+sqlite:///celery_results.sqlite3'
+
+CELERY_BEAT_SCHEDULE = {
+    'periodic_task': {
+        'task': 'home.tasks.privatbank_currency',
+        'schedule': crontab(minute='*/10', hour='10, 18')
+    }
+}

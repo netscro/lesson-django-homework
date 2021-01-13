@@ -1,6 +1,13 @@
+from celery import chain, shared_task
+
 from app.celery import app
 
 
-@app.task()
-def task_test_2():
-    return 1 + 1
+@shared_task
+def privatbank_currency(*args):
+    return sum(args)
+
+
+@shared_task
+def privatbank_task():
+    return chain(privatbank_currency.s(2, 2), privatbank_currency.s(7, 7))()
