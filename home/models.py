@@ -71,3 +71,4 @@ class Currency(models.Model):
     base_ccy = models.CharField(max_length=100)
     buy = models.CharField(max_length=100, null=True,)
     sale = models.CharField(max_length=100, null=True,)
+    date = models.CharField(max_length=100, null=True,)

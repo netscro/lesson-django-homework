@@ -143,8 +143,7 @@ CELERY_RESULT_BACKEND = 'db+sqlite:///celery_results.sqlite3'
 CELERY_BEAT_SCHEDULE = {
     'periodic_task': {
         'task': 'home.tasks.privatbank_task',
-        # 'schedule': crontab(minute='*/10', hour='7, 23'),
-        'schedule': crontab(minute='*'),
+        'schedule': crontab(minute='*/10', hour='7, 23'),
 
     }
 }

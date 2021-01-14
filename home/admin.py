@@ -1,8 +1,6 @@
 from django.contrib import admin
-
 # Register your models here.
 from django.contrib.admin import ModelAdmin
-from django.contrib import admin
 from django.utils.html import format_html
 
 from home.models import Student
