@@ -24,6 +24,12 @@
     </div>
   </section>
 
+        <br>
+        <form method="POST" action="{% url 'subject_update' id=student.id %}">
+                {% csrf_token %}
+                {{ form_save }}
+                <input type="submit", value="Сохранить">
+        </form>
 
 
 {% endblock %}
