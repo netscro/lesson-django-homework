@@ -12,7 +12,7 @@
 
           <h2 class="fw-light">Студент - {{student.name}} {{student.surname}}</h2>
 
-          <h2 class="fw-light">Учитель - {{student.teacher.name_surname}} </h2>
+          <h2 class="fw-light">Учитель - {% for teacher in student.teacher.all %} {{teacher.name_surname}} {% endfor %} </h2>
 
         <form method="POST" action="{% url 'teacher_delete' id=student.id %}">
                 {% csrf_token %}

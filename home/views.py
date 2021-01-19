@@ -198,7 +198,8 @@ class SubjectDelete(View):
 
         students_add_form_update = StudentForm(instance=student)
 
-        context = {'student': student, 'form': students_add_form, 'form_save': students_add_form_update}
+        context = {'student': student, 'form': students_add_form,
+                   'form_save': students_add_form_update}
         return render(request, 'subject_delete.html', context=context)
 
     def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
@@ -271,7 +272,8 @@ class TeacherDelete(View):
 
         students_add_form_update = StudentForm(instance=student)
 
-        context = {'student': student, 'form': students_add_form, 'form_save': students_add_form_update}
+        context = {'student': student, 'form': students_add_form,
+                   'form_save': students_add_form_update}
         return render(request, 'teacher_delete.html', context=context)
 
     def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin

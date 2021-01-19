@@ -19,11 +19,9 @@ class Student(models.Model):
     social_url = models.URLField(max_length=300, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     normalized_name = models.CharField(max_length=300, null=True, blank=True)
-
     subject = models.ForeignKey('home.Subject',
                                 on_delete=models.SET_NULL, null=True)
-    teacher = models.ForeignKey('home.Teacher',
-                                on_delete=models.SET_NULL, null=True)
+    teacher = models.ManyToManyField('home.Teacher')
     report_card = models.OneToOneField('home.ReportCard',
                                        on_delete=models.CASCADE,
                                        null=True)

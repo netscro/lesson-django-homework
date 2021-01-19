@@ -26,8 +26,6 @@ class Command(BaseCommand):
         for new_student in range(options['len']):
             subject, _ = Subject.objects.get_or_create(title='Python') # noqa
             subject.save()
-            teacher, _ = Teacher.objects.get_or_create(name_surname='Michael Jackson') # noqa
-            teacher.save()
 
             student_marks = ReportCard()
             student_marks.report_card = uuid.uuid4()
@@ -46,6 +44,11 @@ class Command(BaseCommand):
             student.is_active = faker.boolean(chance_of_getting_true=100)
 
             student.subject = subject
-            student.teacher = teacher
+            # student.teacher = teacher
+
             student.report_card = student_marks
             student.save()
+
+            teacher, _ = Teacher.objects.get_or_create(name_surname=faker.random_element(elements=('Michael Jackson', 'Jason Bourne', 'Freddy Krueger')))  # noqa E501 line too long
+            student.teacher.add(teacher)
+            teacher.save()
