@@ -14,7 +14,7 @@
 
           <h2 class="fw-light">Учитель - {{student.teacher.name_surname}} </h2>
 
-        <form method="POST" action="{% url 'subject_delete' id=student.id %}">
+        <form method="POST" action="{% url 'teacher_delete' id=student.id %}">
                 {% csrf_token %}
 
                 <input type="submit", value="Удалить студента">
@@ -22,7 +22,7 @@
 
                   <br><br><br>
 <h2 class="fw-light">Обновить данные студента</h2><br>
-        <form method="POST" action="{% url 'subject_update' id=student.id %}">
+        <form method="POST" action="{% url 'teacher_update' id=student.id %}">
                 {% csrf_token %}
                 {{ form_save }}
                 <input type="submit", value="Сохранить">

@@ -254,3 +254,47 @@ class TeacherInfo(View):
         else:
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
+
+
+class TeacherDelete(View):
+    """
+    This page delete a student of subject
+    """
+
+    def get_student(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
+        return get_object_or_404(Student, id=id)
+
+    def get(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+        all_students = Student.objects.all()  # noqa
+        students_add_form = StudentForm()
+        student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
+
+        students_add_form_update = StudentForm(instance=student)
+
+        context = {'student': student, 'form': students_add_form, 'form_save': students_add_form_update}
+        return render(request, 'teacher_delete.html', context=context)
+
+    def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+        student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
+        student.delete()
+
+        return redirect(reverse('teacher_info'))
+
+
+class TeacherUpdate(View):
+    """
+    This page updated information of students
+    #:param request:
+    #:param id: id of student in database
+    :return: updated students info page
+    """
+
+    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+        student = get_object_or_404(Student, id=id)  # noqa - A002 argument "id" is shadowing a python builtin
+        student_form = StudentForm(request.POST, instance=student)
+        if student_form.is_valid():
+            student_form.save()
+            return redirect(reverse('teacher_info'))
+        else:
+            return HttpResponseBadRequest('Некорректно '
+                                          'заполнены данные в форме')

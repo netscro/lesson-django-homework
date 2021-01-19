@@ -18,7 +18,7 @@ from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo, ReportCardDelete, SubjectInfo, \
-    SubjectDelete, TeacherInfo, SubjectUpdate  # noqa
+    SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete  # noqa
   # noqa
 urlpatterns = [
 
@@ -47,4 +47,8 @@ urlpatterns = [
 
     path('teacher-info/', TeacherInfo.as_view(),
          name='teacher_info'),
+    path('teacher-delete/<id>/', TeacherDelete.as_view(),
+         name='teacher_delete'),
+    path('teacher-update/<id>/', TeacherUpdate.as_view(),
+         name='teacher_update'),
 ]
