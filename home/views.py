@@ -1,6 +1,6 @@
 import uuid
 
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse
@@ -300,3 +300,19 @@ class TeacherUpdate(View):
         else:
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
+
+
+class JsonStudentsView(View):
+
+    def get(self, request):
+        all_students = Student.objects.all()
+        json_students = []
+        for one_student in all_students:
+            dict_one_student = {"id": f"{one_student.id}", "name": f"{one_student.name}",
+                                "second_name": f"{one_student.surname}"}
+            json_students.append(dict_one_student)
+
+        return JsonResponse({"students": json_students})
+
+        # return JsonResponse({"students": model_to_dict(all_students)})
+        # --> делает тоже самое только без цикла для одного студента (*пометка для меня чтоб запомнить)
