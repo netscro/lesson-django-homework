@@ -25,7 +25,8 @@ class MainPage(View):
     #:param request: output 'Hello, this is a home page :)'
     #:return: Hello, this is a home page :)
     """
-    def get(self, request): # noqa
+
+    def get(self, request):  # noqa
         return render(request, 'index.html')
 
 
@@ -61,7 +62,7 @@ class StudentUpdateMain(View):
     #:return: prints /students-info/ page
     """
 
-    def get(self, request): # noqa
+    def get(self, request):  # noqa
         return redirect(reverse('students_info'))
 
 
@@ -73,16 +74,16 @@ class StudentUpdate(View):
     :return: updated students info page
     """
 
-    def get_student(self, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def get_student(self, id):  # noqa - A002 argument "id" is shadowing a python builtin
         return get_object_or_404(Student, id=id)
 
-    def get(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def get(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(instance=student)
         context = {'form': student_form, 'student': student}
         return render(request, 'student_update.html', context=context)
 
-    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(request.POST, instance=student)
         if student_form.is_valid():
@@ -98,7 +99,7 @@ class StudentsInfo(View):
     This page print name all students in database
     """
 
-    def get(self, request): # noqa
+    def get(self, request):  # noqa
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
 
@@ -109,7 +110,7 @@ class StudentsInfo(View):
                                'form': students_add_form,
                                'filter': filter_student})
 
-    def post(self, request): # noqa
+    def post(self, request):  # noqa
         students_add_form = StudentForm(request.POST)
         if students_add_form.is_valid():
             students_add_form.save()
@@ -126,6 +127,7 @@ class ReportCardInfo(View):
     #:param id: id of report card in database
     :return: updated students info page
     """
+
     def get(self, request):
         all_students = Student.objects.all()  # noqa
         return render(request, 'report_card_info.html',
@@ -137,16 +139,16 @@ class ReportCardDelete(View):
     This page delete report card of a student with POST request
     """
 
-    def get_report_card_id(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def get_report_card_id(self, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         return get_object_or_404(ReportCard, id=id)
 
-    def get(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def get(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         report_card = self.get_report_card_id(id)
         report_card_form = ReportCardForm(instance=report_card)
         context = {'form': report_card_form, 'report_card': report_card}
         return render(request, 'report_card_delete.html', context=context)
 
-    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         report_card = self.get_report_card_id(id)
         report_card_form = ReportCardForm(request.POST, instance=report_card)
         report_card.delete()
@@ -158,6 +160,7 @@ class SubjectInfo(View):
     """
     This page updated information of teacher of each student
     """
+
     def get(self, request):
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
@@ -188,10 +191,10 @@ class SubjectDelete(View):
     This page delete a student of subject
     """
 
-    def get_student(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def get_student(self, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         return get_object_or_404(Student, id=id)
 
-    def get(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def get(self, request, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
         student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
@@ -202,7 +205,7 @@ class SubjectDelete(View):
                    'form_save': students_add_form_update}
         return render(request, 'subject_delete.html', context=context)
 
-    def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
         student.delete()
 
@@ -217,7 +220,7 @@ class SubjectUpdate(View):
     :return: updated students info page
     """
 
-    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         student = get_object_or_404(Student, id=id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(request.POST, instance=student)
         if student_form.is_valid():
@@ -232,6 +235,7 @@ class TeacherInfo(View):
     """
     This page view information of teacher of each student
     """
+
     def get(self, request):
         students_add_form = StudentForm()
         all_students = Student.objects.all()  # noqa
@@ -262,10 +266,10 @@ class TeacherDelete(View):
     This page delete a student of subject
     """
 
-    def get_student(self, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def get_student(self, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         return get_object_or_404(Student, id=id)
 
-    def get(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def get(self, request, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         all_students = Student.objects.all()  # noqa
         students_add_form = StudentForm()
         student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
@@ -276,7 +280,7 @@ class TeacherDelete(View):
                    'form_save': students_add_form_update}
         return render(request, 'teacher_delete.html', context=context)
 
-    def post(self, request, id): # noqa -  A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa -  A002 argument "id" is shadowing a python builtin
         student = self.get_student(id)  # noqa -  A002 argument "id" is shadowing a python builtin
         student.delete()
 
@@ -291,7 +295,7 @@ class TeacherUpdate(View):
     :return: updated students info page
     """
 
-    def post(self, request, id): # noqa - A002 argument "id" is shadowing a python builtin
+    def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
         student = get_object_or_404(Student, id=id)  # noqa - A002 argument "id" is shadowing a python builtin
         student_form = StudentForm(request.POST, instance=student)
         if student_form.is_valid():
@@ -309,10 +313,23 @@ class JsonStudentsView(View):
         json_students = []
         for one_student in all_students:
             dict_one_student = {"id": f"{one_student.id}", "name": f"{one_student.name}",
-                                "second_name": f"{one_student.surname}"}
+                                "second_name": f"{one_student.surname}", "age": f"{one_student.age}"}
             json_students.append(dict_one_student)
 
         return JsonResponse({"students": json_students})
 
-        # return JsonResponse({"students": model_to_dict(all_students)})
-        # --> делает тоже самое только без цикла для одного студента (*пометка для меня чтоб запомнить)
+        # return JsonResponse({"students": model_to_dict(Student.objects.first())})
+        # --> делает тоже самое только без цикла для одного/первого студента
+        # (*пометка для меня чтоб запомнить)
+
+        # return JsonResponse({"students": list(all_students.values())})
+        # --> выводит всю информацию о студенте, без цикла для всех студентов
+        # (*пометка для меня чтоб запомнить)
+
+
+class CSVView(View):
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = "attachment; filename=students_data.csv"
+
+        return response

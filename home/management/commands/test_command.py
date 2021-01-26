@@ -1,8 +1,4 @@
-from abc import ABC
-
 from django.core.management import BaseCommand
-
-from home.models import Student
 
 
 class Command(BaseCommand):

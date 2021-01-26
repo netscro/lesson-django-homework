@@ -7,6 +7,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Данные всех студентов</h1>
+          <a href="{% url 'students_csv'%}">Download CSV</a>
         <br>
           <h2 class="fw-light">Сортировка:</h2>
           <form method="GET">
@@ -16,7 +17,6 @@
       </div>
     </div>
   </section>
-
 {% comment %}
 <p>
         {% for one_student in all_students %}

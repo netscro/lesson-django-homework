@@ -18,7 +18,7 @@ from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo, ReportCardDelete, SubjectInfo, \
-    SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete, JsonStudentsView  # noqa
+    SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete, JsonStudentsView, CSVView  # noqa
   # noqa
 urlpatterns = [
 
@@ -54,4 +54,6 @@ urlpatterns = [
 
     path('students-json/', JsonStudentsView.as_view(),
          name='students_json'),
+    path('students-csv/', CSVView.as_view(),
+         name='students_csv'),
 ]
