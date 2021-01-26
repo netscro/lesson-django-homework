@@ -313,13 +313,15 @@ class JsonStudentsView(View):
         all_students = Student.objects.all()
         json_students = []
         for one_student in all_students:
-            dict_one_student = {"id": f"{one_student.id}", "name": f"{one_student.name}",
-                                "second_name": f"{one_student.surname}", "age": f"{one_student.age}"}
+            dict_one_student = {"id": f"{one_student.id}",
+                                "name": f"{one_student.name}",
+                                "second_name": f"{one_student.surname}",
+                                "age": f"{one_student.age}"}
             json_students.append(dict_one_student)
 
         return JsonResponse({"students": json_students})
 
-        # return JsonResponse({"students": model_to_dict(Student.objects.first())})
+        # return JsonResponse({"students": model_to_dict(Student.objects.first())}) # noqa - E501 line too long
         # --> делает тоже самое только без цикла для одного/первого студента
         # (*пометка для меня чтоб запомнить)
 
@@ -331,11 +333,13 @@ class JsonStudentsView(View):
 class CSVView(View):
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = "attachment; filename=students_data.csv"
+        response['Content-Disposition'] = "attachment; " \
+                                          "filename=students_data.csv"
         write_csv = csv.writer(response)
         write_csv.writerow(['Name', 'Surname', 'Age', 'Sex'])
 
         students = Student.objects.all()
         for one_student in students:
-            write_csv.writerow([one_student.name, one_student.surname, one_student.age, one_student.sex])
+            write_csv.writerow([one_student.name, one_student.surname,
+                                one_student.age, one_student.sex])
         return response

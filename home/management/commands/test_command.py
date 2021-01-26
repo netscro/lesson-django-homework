@@ -15,6 +15,3 @@ class Command(BaseCommand):
         number of students in func "add_arguments"
         """
         # ниже вставлять код для тестиорования
-
-
-
