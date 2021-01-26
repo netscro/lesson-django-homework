@@ -1,3 +1,4 @@
+import csv
 import uuid
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -331,5 +332,10 @@ class CSVView(View):
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = "attachment; filename=students_data.csv"
+        write_csv = csv.writer(response)
+        write_csv.writerow(['Name', 'Surname', 'Age', 'Sex'])
 
+        students = Student.objects.all()
+        for one_student in students:
+            write_csv.writerow([one_student.name, one_student.surname, one_student.age, one_student.sex])
         return response
