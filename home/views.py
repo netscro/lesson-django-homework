@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 
+from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
 from home.models import ReportCard, Student
 
@@ -343,3 +344,12 @@ class CSVView(View):
             write_csv.writerow([one_student.name, one_student.surname,
                                 one_student.age, one_student.sex])
         return response
+
+
+class SendEmail(View):
+
+    def get(self, request):
+        send_email(subject='Письмо счастья :)',
+                   message='Вам сказачно повезло, вы выиграли бочку виски!',
+                   recipient_list=['kovalev_evgeniy@list.ru'])
+        return HttpResponse('Письмо отправлено!')
