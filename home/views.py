@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
@@ -90,32 +90,46 @@ class StudentUpdateMain(View):
         return redirect(reverse('students_info'))
 
 
-class StudentUpdate(View):
+# ----------------------------------------------------------------------------
+# class StudentUpdate(View):
+#     """
+#     This page updated information of students
+#     #:param request:
+#     #:param id: id of student in database
+#     :return: updated students info page
+#     """
+#
+#     def get_student(self, id):  # noqa - A002 argument "id" is shadowing a python builtin
+#         return get_object_or_404(Student, id=id)
+#
+#     def get(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
+#         student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
+#         student_form = StudentForm(instance=student)
+#         context = {'form': student_form, 'student': student}
+#         return render(request, 'student_update.html', context=context)
+#
+#     def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
+#         student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
+#         student_form = StudentForm(request.POST, instance=student)
+#         if student_form.is_valid():
+#             student_form.save()
+#             return redirect(reverse('students_info'))
+#         else:
+#             return HttpResponseBadRequest('Некорректно '
+#                                           'заполнены данные в форме')
+# ----------------------------------------------------------------------------
+
+
+class StudentUpdate(UpdateView):
     """
     This page updated information of students
-    #:param request:
-    #:param id: id of student in database
-    :return: updated students info page
     """
-
-    def get_student(self, id):  # noqa - A002 argument "id" is shadowing a python builtin
-        return get_object_or_404(Student, id=id)
-
-    def get(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
-        student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
-        student_form = StudentForm(instance=student)
-        context = {'form': student_form, 'student': student}
-        return render(request, 'student_update.html', context=context)
-
-    def post(self, request, id):  # noqa - A002 argument "id" is shadowing a python builtin
-        student = self.get_student(id)  # noqa - A002 argument "id" is shadowing a python builtin
-        student_form = StudentForm(request.POST, instance=student)
-        if student_form.is_valid():
-            student_form.save()
-            return redirect(reverse('students_info'))
-        else:
-            return HttpResponseBadRequest('Некорректно '
-                                          'заполнены данные в форме')
+    model = Student
+    fields = ['name', 'surname', 'age',
+              'social_url', 'email',
+              'description', 'subject', 'teacher']
+    template_name = 'student_update.html'
+    success_url = reverse_lazy('students_info')
 
 
 # ----------------------------------------------------------------------------

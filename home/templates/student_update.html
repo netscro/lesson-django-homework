@@ -7,9 +7,9 @@
         <h1>Данные студента - {{student.name}} {{student.surname}}</h1>
 
         <br>
-        <form method="POST" action="{% url 'student_update' id=student.id %}">
+        <form method="POST" action="{% url 'student_update' pk=student.id %}">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.as_p }}
                 <input type="submit">
         </form>
 

@@ -29,8 +29,11 @@ urlpatterns = [
 
     path('students/', Students.as_view(), name='students'),
 
-    path('student-update/<id>/', StudentUpdate.as_view(),
+    # path('student-update/<id>/', StudentUpdate.as_view(),
+    #      name='student_update'),
+    path('student-update/<pk>/', StudentUpdate.as_view(),
          name='student_update'),
+
     path('student-update/', StudentUpdateMain.as_view(),
          name='student_update_main'),
     path('students-info/', StudentsInfo.as_view(), name='students_info'),
