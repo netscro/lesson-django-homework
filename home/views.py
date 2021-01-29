@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
@@ -178,7 +178,8 @@ class StudentsInfo(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = StudentFilter(self.request.GET, queryset=Student.objects.all())
+        context['filter'] = StudentFilter(self.request.GET,
+                                          queryset=Student.objects.all())
         return context
 
 
