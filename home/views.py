@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
@@ -129,6 +129,12 @@ class StudentUpdate(UpdateView):
               'social_url', 'email',
               'description', 'subject', 'teacher']
     template_name = 'student_update.html'
+    success_url = reverse_lazy('students_info')
+
+
+class StudentDelete(DeleteView):
+    model = Student
+    template_name = 'student_delete.html'
     success_url = reverse_lazy('students_info')
 
 
