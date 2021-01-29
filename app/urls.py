@@ -17,16 +17,18 @@ from django.contrib import admin
 from django.urls import path
 
 from home.views import MainPage, StudentUpdate, \
-    StudentUpdateMain, StudentsInfo, home, students, ReportCardInfo, ReportCardDelete, SubjectInfo, \
+    StudentUpdateMain, StudentsInfo, home, ReportCardInfo, ReportCardDelete, SubjectInfo, \
     SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete, JsonStudentsView, CSVView, \
-    SendEmail  # noqa
+    SendEmail, Students  # noqa
   # noqa
 urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('home/', home, name='home'),
     path('', MainPage.as_view(), name='main_page'),
-    path('students/', students, name='students'),
+
+    path('students/', Students.as_view(), name='students'),
+
     path('student-update/<id>/', StudentUpdate.as_view(),
          name='student_update'),
     path('student-update/', StudentUpdateMain.as_view(),

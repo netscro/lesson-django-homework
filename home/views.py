@@ -4,9 +4,9 @@ import uuid
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
@@ -33,29 +33,50 @@ class MainPage(View):
         return render(request, 'index.html')
 
 
-def students(request):  # работает через функцию
+# ----------------------------------------------------------------------
+# def students(request):  # работает через функцию
+#     """
+#     This page print information about all students in database
+#     :param request: output 'students.html'
+#     :return: information of all students
+#     """
+#     all_students = Student.objects.all()  # noqa
+#
+#     if request.method == 'GET':
+#         students_add_form = StudentForm()
+#
+#         return render(request, 'students.html',
+#                       context={'all_students': all_students,
+#                                'form': students_add_form})
+#
+#     elif request.method == 'POST':
+#         students_add_form = StudentForm(request.POST)
+#         if students_add_form.is_valid():
+#             students_add_form.save()
+#             return redirect(reverse('students'))
+#         else:
+#             return HttpResponseBadRequest('Некорректно'
+#                                           ' заполнены данные в форме')
+# -----------------------------------------------------------------------
+
+
+class Students(CreateView):
     """
-    This page print information about all students in database
-    :param request: output 'students.html'
-    :return: information of all students
+    This page create new student in database
     """
-    all_students = Student.objects.all()  # noqa
+    model = Student
+    fields = ['name', 'surname', 'age',
+              'social_url', 'email',
+              'description', 'subject', 'teacher']
+    template_name = 'students.html'
+    success_url = reverse_lazy('students_info')
 
-    if request.method == 'GET':
-        students_add_form = StudentForm()
-
-        return render(request, 'students.html',
-                      context={'all_students': all_students,
-                               'form': students_add_form})
-
-    elif request.method == 'POST':
-        students_add_form = StudentForm(request.POST)
-        if students_add_form.is_valid():
-            students_add_form.save()
-            return redirect(reverse('students'))
-        else:
-            return HttpResponseBadRequest('Некорректно'
-                                          ' заполнены данные в форме')
+    def form_valid(self, form):
+        report_card = ReportCard()
+        report_card.report_card = uuid.uuid4()
+        report_card.save()
+        form.instance.report_card = report_card
+        return super(Students, self).form_valid(form)
 
 
 class StudentUpdateMain(View):
@@ -95,6 +116,7 @@ class StudentUpdate(View):
         else:
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
+
 
 # ----------------------------------------------------------------------------
 # оставил для себя чтоб не забыть как работает через View
