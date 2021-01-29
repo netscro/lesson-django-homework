@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse
 from django.views import View
+from django.views.generic import ListView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
@@ -95,31 +96,48 @@ class StudentUpdate(View):
             return HttpResponseBadRequest('Некорректно '
                                           'заполнены данные в форме')
 
+# ----------------------------------------------------------------------------
+# оставил для себя чтоб не забыть как работает через View
+#
+# class StudentsInfo(View):
+#     """
+#     This page print name all students in database
+#     """
+#
+#     def get(self, request):  # noqa
+#         all_students = Student.objects.all()  # noqa
+#         students_add_form = StudentForm()
+#
+#         filter_student = StudentFilter(request.GET, queryset=all_students)
+#
+#         return render(request, 'students_info.html',
+#                       context={'all_students': all_students,
+#                                'form': students_add_form,
+#                                'filter': filter_student})
+#
+#     def post(self, request):  # noqa
+#         students_add_form = StudentForm(request.POST)
+#         if students_add_form.is_valid():
+#             students_add_form.save()
+#             return redirect(reverse('students_info'))
+#         else:
+#             return HttpResponseBadRequest('Некорректно '
+#                                           'заполнены данные в форме')
+# ---------------------------------------------------------------------------
 
-class StudentsInfo(View):
+
+class StudentsInfo(ListView):
     """
     This page print name all students in database
     """
 
-    def get(self, request):  # noqa
-        all_students = Student.objects.all()  # noqa
-        students_add_form = StudentForm()
+    model = Student
+    template_name = 'students_info.html'
 
-        filter_student = StudentFilter(request.GET, queryset=all_students)
-
-        return render(request, 'students_info.html',
-                      context={'all_students': all_students,
-                               'form': students_add_form,
-                               'filter': filter_student})
-
-    def post(self, request):  # noqa
-        students_add_form = StudentForm(request.POST)
-        if students_add_form.is_valid():
-            students_add_form.save()
-            return redirect(reverse('students_info'))
-        else:
-            return HttpResponseBadRequest('Некорректно '
-                                          'заполнены данные в форме')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = StudentFilter(self.request.GET, queryset=Student.objects.all())
+        return context
 
 
 class ReportCardInfo(View):
