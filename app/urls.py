@@ -13,8 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, ReportCardInfo, ReportCardDelete, SubjectInfo, \
@@ -39,7 +41,7 @@ urlpatterns = [
 
     path('student-update/', StudentUpdateMain.as_view(),
          name='student_update_main'),
-    path('students-info/', StudentsInfo.as_view(), name='students_info'),
+    path('students-info/', cache_page(settings.CACHE_TTL)(StudentsInfo.as_view()), name='students_info'),
 
     path('report-card-info/', ReportCardInfo.as_view(),
          name='report_card_info'),

@@ -1,5 +1,6 @@
 import csv
 import uuid
+from time import sleep
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -172,9 +173,12 @@ class StudentsInfo(ListView):
     """
     This page print name all students in database
     """
-
     model = Student
     template_name = 'students_info.html'
+
+    def get(self, request, *args, **kwargs):
+        sleep(10)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
