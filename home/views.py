@@ -1,11 +1,15 @@
 import csv
 import uuid
+from time import sleep
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from home.emails import send_email
@@ -168,13 +172,17 @@ class StudentDelete(DeleteView):
 # ---------------------------------------------------------------------------
 
 
+@method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
 class StudentsInfo(ListView):
     """
     This page print name all students in database
     """
-
     model = Student
     template_name = 'students_info.html'
+
+    def get(self, request, *args, **kwargs):
+        sleep(10)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

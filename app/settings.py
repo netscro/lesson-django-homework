@@ -27,7 +27,7 @@ SECRET_KEY = 'f#^pzlqb02oya(x_t27(9lpgjg8n$&y9-_@u0z7e$bjlwe5jsp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -89,6 +89,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+CACHES = {
+    'default': {'BACKEND': 'django_redis.cache.RedisCache',
+                'LOCATION': 'redis://127.0.0.1:6379/1'}
+}
+
+CACHE_TTL = 60 * 10
 
 
 # Password validation
