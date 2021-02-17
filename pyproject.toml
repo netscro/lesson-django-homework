@@ -5,7 +5,7 @@ description = "django-homework hillel"
 authors = ["netscro <kovalev_evgeniy@list.ru>"]
 
 [tool.poetry.dependencies]
-python = "3.8"
+python = "^3.7.3"
 Django = "3.1.4"
 gender-guesser = "0.4.0"
 celery = "5.0.5"
