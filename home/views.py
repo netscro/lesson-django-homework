@@ -172,7 +172,7 @@ class StudentDelete(DeleteView):
 # ---------------------------------------------------------------------------
 
 
-@method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
+# @method_decorator(cache_page(settings.CACHE_TTL), name='dispatch') # кеширование Redis
 class StudentsInfo(ListView):
     """
     This page print name all students in database
