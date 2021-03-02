@@ -19,7 +19,7 @@ from django.urls import path
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, ReportCardInfo, ReportCardDelete, SubjectInfo, \
     SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete, JsonStudentsView, CSVView, \
-    SendEmail, Students, StudentDelete, LoginUser, SignUpUser  # noqa
+    SendEmail, Students, StudentDelete, LoginUser, SignUpUser, ActivateUser, LogOutUser  # noqa
   # noqa
 urlpatterns = [
 
@@ -72,6 +72,10 @@ urlpatterns = [
 
     path('login/', LoginUser.as_view(),
          name='login'),
+    path('logout/', LogOutUser.as_view(),
+         name='logout'),
     path('sign-up/', SignUpUser.as_view(),
          name='sign_up'),
+    path('activate/<uid>/<token>/', ActivateUser.as_view(),
+         name='activate_user'),
 ]

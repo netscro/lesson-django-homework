@@ -7,9 +7,10 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h2 class="fw-light">Страница авторизации пользователя</h2>
+          <br>
           <form method="POST">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.as_p }}
                 <button type="submit">Войти</button>
           </form>
 

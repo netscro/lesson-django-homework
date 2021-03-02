@@ -8,7 +8,9 @@
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Учителя студентов</h1>
           <br>
+          {{ user.is_authenticated }}
   {% if user.is_authenticated %}
+
           <h2 class="fw-light">Добавить нового студента</h2>
           <br>
           <form method="POST" action="{% url 'teacher_info' %}">
@@ -50,7 +52,7 @@
   {% endfor %}
    {% else %}
                 <h3>Вам необходимо авторизоваться</h3>
-                <p>Для авторизации перейдите по ссылке: <a href="{% url 'main_page' %}">Вход в личный кабинет</a>
+                <p>Для авторизации перейдите по ссылке: <a href="{% url 'login' %}">Вход в личный кабинет</a>
   {% endif %}
       </div>
     </div>

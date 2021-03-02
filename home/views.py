@@ -1,17 +1,21 @@
 import csv
 import uuid
+from time import sleep
 
-# from django.conf import settings
+from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
-# from django.utils.decorators import method_decorator
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
-# from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from home.emails import send_email, sing_up_email
@@ -174,7 +178,7 @@ class StudentDelete(DeleteView):
 # ---------------------------------------------------------------------------
 
 
-# @method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
+@method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
 class StudentsInfo(ListView):
     """
     This page print name all students in database
@@ -183,6 +187,7 @@ class StudentsInfo(ListView):
     template_name = 'students_info.html'
 
     def get(self, request, *args, **kwargs):
+        sleep(10)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -427,6 +432,12 @@ class SendEmail(View):
 
 class SignUpUser(View):
 
+    """
+    Create default user:
+    user_name = test_user
+    password = cxvbwerxcvbdrfg
+    """
+
     def get(self, request):
         sign_up_form = UserSignUpForm()
         return render(request, 'signup.html', context={
@@ -442,14 +453,53 @@ class SignUpUser(View):
 
             uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-            activate_user_url = f'http://localhost/' \
-                                f'{default_token_generator.make_token(user=user)}'
+            activate_user_url = f'http://localhost/activate/' \
+                                f'{uid}/' \
+                                f'{default_token_generator.make_token(user=user)}/'
 
             sing_up_email(recipient_list=[user.email],
-                          activate_user_url='activate_user_url',
-                          uid=user.id)
+                          activate_user_url=activate_user_url)
+
+            return HttpResponse('Проверьте вашу почту и активируйте аккаунт')
+        return HttpResponse(f'Ошибка, проверьте ваши данные {sign_up_form.errors}')
+
+
+class ActivateUser(View):
+
+    def get(self, request, uid, token):
+
+        user = User.objects.get(pk=force_bytes(urlsafe_base64_decode(uid)))
+        if not user.is_active and default_token_generator.check_token(user, token):
+
+            user.is_active = True
+            user.save()
+
+            login(request, user)
+
+            return HttpResponse('Пользователь активирован и авторизирован')
+
+        return HttpResponse('Ваш аккаунт уже активирован')
 
 
 class LoginUser(View):
+
     def get(self, request):
-        return render(request, 'login.html')
+        login_user_form = AuthenticationForm()
+
+        return render(request, 'login.html', context={
+            'form': login_user_form
+        })
+
+    def post(self, request):
+        login_user_form = AuthenticationForm(request.POST)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request=request, username=username, password=password)
+        login(request, user)
+        return redirect(reverse('main_page'))
+
+
+class LogOutUser(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('main_page')))

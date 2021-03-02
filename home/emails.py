@@ -10,7 +10,7 @@ def send_email(subject=None, message=None, recipient_list=None):
               html_message=email_template.render())
 
 
-def sing_up_email(recipient_list=None, activate_user_url=None, uid=None):
+def sing_up_email(recipient_list=None, activate_user_url=None):
     subject = 'Спасибо за регистрацию!'
     message = f'Добро пожаловать! Для активации ' \
               f'вашего аккаунта перейдите по ссылке:\n' \
