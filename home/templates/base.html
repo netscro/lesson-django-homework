@@ -58,7 +58,11 @@
  </nav>
  <a href="#0" class="cd-close">Close modal</a>
  </div>
-
+   {% if user.is_authenticated %}
+   <p align="center"><a href="{% url 'home' %}">Logout</a>
+   {% else %}
+   <p align="center"><a href="{% url 'home' %}">Login</a> &nbsp; <a href="{% url 'home' %}">Logout</a>
+   {% endif %}
 {% block body %}
 
 {% endblock %}

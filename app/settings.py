@@ -90,12 +90,12 @@ DATABASES = {
     }
 }
 
-CACHES = {
-    'default': {'BACKEND': 'django_redis.cache.RedisCache',
-                'LOCATION': 'redis://127.0.0.1:6379/1'}
-}
-
-CACHE_TTL = 60 * 10
+# CACHES = {
+#     'default': {'BACKEND': 'django_redis.cache.RedisCache',
+#                 'LOCATION': 'redis://127.0.0.1:6379/1'}
+# }
+#
+# CACHE_TTL = 60 * 10
 
 
 # Password validation
