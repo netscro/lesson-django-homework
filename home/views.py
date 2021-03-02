@@ -2,7 +2,7 @@ import csv
 import uuid
 from time import sleep
 
-from django.conf import settings
+# from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -12,11 +12,11 @@ from django.http import (HttpResponse, HttpResponseBadRequest,
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
+# from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from home.emails import send_email, sing_up_email
@@ -179,7 +179,7 @@ class StudentDelete(DeleteView):
 # ---------------------------------------------------------------------------
 
 
-@method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
+# @method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
 class StudentsInfo(ListView):
     """
     This page print name all students in database
