@@ -13,7 +13,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from home.emails import send_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
-from home.models import ReportCard, Student
+from home.models import ReportCard, Student, UserSignUpForm
 
 
 def home(request):  # noqa - # работает через функцию
@@ -420,3 +420,24 @@ class SendEmail(View):
                    message='Вам сказачно повезло, вы выиграли бочку виски!',
                    recipient_list=['kovalev_evgeniy@list.ru'])
         return HttpResponse('Письмо отправлено!')
+
+
+class SignUpUser(View):
+
+    def get(self, request):
+        sign_up_form = UserSignUpForm()
+        return render(request, 'signup.html', context={
+                    'form': sign_up_form
+                })
+
+    def post(self, request):
+        sign_up_form = UserSignUpForm(request.POST)
+        if sign_up_form.is_valid():
+            user = sign_up_form.save()
+            user.is_active = False
+            user.save()
+
+
+class LoginUser(View):
+    def get(self, request):
+        return render(request, 'login.html')
