@@ -1,6 +1,5 @@
 import csv
 import uuid
-from time import sleep
 
 # from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
@@ -22,6 +21,10 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from home.emails import send_email, sing_up_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
 from home.models import ReportCard, Student, UserSignUpForm
+
+# from time import sleep
+
+
 
 
 def home(request):  # noqa - # работает через функцию
@@ -188,7 +191,7 @@ class StudentsInfo(ListView):
     template_name = 'students_info.html'
 
     def get(self, request, *args, **kwargs):
-        sleep(10)
+        # sleep(10)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
