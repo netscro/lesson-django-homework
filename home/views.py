@@ -2,16 +2,19 @@ import csv
 import uuid
 
 # from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 # from django.utils.decorators import method_decorator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views import View
 # from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from home.emails import send_email
+from home.emails import send_email, sing_up_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
 from home.models import ReportCard, Student, UserSignUpForm
 
@@ -436,6 +439,15 @@ class SignUpUser(View):
             user = sign_up_form.save()
             user.is_active = False
             user.save()
+
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+            activate_user_url = f'http://localhost/' \
+                                f'{default_token_generator.make_token(user=user)}'
+
+            sing_up_email(recipient_list=[user.email],
+                          activate_user_url='activate_user_url',
+                          uid=user.id)
 
 
 class LoginUser(View):
