@@ -24,7 +24,7 @@ class Student(models.Model):
     subject = models.ForeignKey('home.Subject',
                                 on_delete=models.SET_NULL, null=True)
     teacher = models.ManyToManyField('home.Teacher')
-    picture = models.ImageField(upload_to='pictures', null=True)
+    picture = models.ImageField(upload_to='pictures', null=True, blank=True)
     report_card = models.OneToOneField('home.ReportCard',
                                        on_delete=models.CASCADE,
                                        null=True)
