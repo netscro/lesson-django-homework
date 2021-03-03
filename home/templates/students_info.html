@@ -47,9 +47,16 @@
 
         <div class="col">
           <div class="card shadow-sm">
+                {% if one_student.picture %}
+              <img src="/media/{{ one_student.picture }}" width="100%" height="225" >
+           <p align="center">   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+               {{ one_student.name }} {{ one_student.surname }}</text>
+                {% else %}
+<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+<title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ one_student.name }} {{ one_student.surname }}</text></svg>
+              {%endif%}
 
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    {{ one_student.name }} {{ one_student.surname }}</text></svg>
+
 
             <div class="card-body">
               <p class="card-text">Teacher: {% for teacher in one_student.teacher.all %} {{teacher.name_surname}} {% endfor %}<p>Subject: {{one_student.subject.title}}<p> Report Card: {{one_student.report_card.report_card}}<p>Age: {{one_student.age}}</p>
