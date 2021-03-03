@@ -10,7 +10,7 @@
 
                   <br><br><br>
           <h2 class="fw-light">Добавить нового студента</h2>
-        <form method="POST" action="{% url 'subject_info' %}">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'subject_info' %}">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit">

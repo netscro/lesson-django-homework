@@ -22,7 +22,7 @@
 
                   <br><br><br>
 <h2 class="fw-light">Обновить данные студента</h2><br>
-        <form method="POST" action="{% url 'subject_update' id=student.id %}">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'subject_update' id=student.id %}">
                 {% csrf_token %}
                 {{ form_save }}
                 <input type="submit", value="Сохранить">

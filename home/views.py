@@ -141,7 +141,7 @@ class StudentUpdate(UpdateView):
     model = Student
     fields = ['name', 'surname', 'age',
               'social_url', 'email',
-              'description', 'subject', 'teacher']
+              'description', 'subject', 'teacher', 'picture']
     template_name = 'student_update.html'
     success_url = reverse_lazy('students_info')
 

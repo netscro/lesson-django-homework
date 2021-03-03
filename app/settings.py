@@ -57,6 +57,9 @@ MIDDLEWARE = [
     'app.middleware.IdentifyResponseMiddleware',
 ]
 
+MEDIA_ROOT = '/home/jeka/PycharmProjects/django-homework/media'
+MEDIA_URL = 'media/'
+
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
