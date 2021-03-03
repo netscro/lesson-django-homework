@@ -9,7 +9,8 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = ['name', 'surname', 'age',
-                  'social_url', 'email', 'description', 'subject', 'teacher']
+                  'social_url', 'email', 'description',
+                  'subject', 'teacher', 'picture']
 
 
 class ReportCardForm(ModelForm):

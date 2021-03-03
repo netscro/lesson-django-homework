@@ -18,7 +18,7 @@
         {% endfor %}
 </p>
         <br>
-        <form method="POST" action="{% url 'students' %}">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'students' %}">
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit">

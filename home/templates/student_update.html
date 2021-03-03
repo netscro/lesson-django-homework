@@ -7,7 +7,7 @@
         <h1>Данные студента - {{student.name}} {{student.surname}}</h1>
 
         <br>
-        <form method="POST" action="{% url 'student_update' pk=student.id %}">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'student_update' pk=student.id %}">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit">
