@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from home.models import Student, Subject, Teacher, ReportCard
+from home.models import ReportCard, Student, Subject, Teacher
 
 
 class StudentSerializer(serializers.ModelSerializer):

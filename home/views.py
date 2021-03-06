@@ -21,10 +21,10 @@ from rest_framework.viewsets import ModelViewSet
 
 from home.emails import send_email, sing_up_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
-from home.models import ReportCard, Student, UserSignUpForm, Subject, Teacher
-
+from home.models import ReportCard, Student, Subject, Teacher, UserSignUpForm
 # from time import sleep
-from home.serializers import StudentSerializer, SubjectSerializer, TeacherSerializer, ReportCardSerializer
+from home.serializers import (ReportCardSerializer, StudentSerializer,
+                              SubjectSerializer, TeacherSerializer)
 
 
 def home(request):  # noqa - # работает через функцию
