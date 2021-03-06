@@ -21,11 +21,10 @@ from rest_framework.viewsets import ModelViewSet
 
 from home.emails import send_email, sing_up_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
-from home.models import ReportCard, Student, UserSignUpForm
-
+from home.models import ReportCard, Student, UserSignUpForm, Subject, Teacher
 
 # from time import sleep
-from home.serializers import StudentSerializer
+from home.serializers import StudentSerializer, SubjectSerializer, TeacherSerializer, ReportCardSerializer
 
 
 def home(request):  # noqa - # работает через функцию
@@ -517,3 +516,18 @@ class LogOutUser(View):
 class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+
+class SubjectViewAPI(ModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class TeacherViewAPI(ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class ReportCardViewAPI(ModelViewSet):
+    queryset = ReportCard.objects.all()
+    serializer_class = ReportCardSerializer

@@ -16,14 +16,26 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from home.views import MainPage, StudentUpdate, \
     StudentUpdateMain, StudentsInfo, home, ReportCardInfo, ReportCardDelete, SubjectInfo, \
     SubjectDelete, TeacherInfo, SubjectUpdate, TeacherUpdate, TeacherDelete, JsonStudentsView, CSVView, \
-    SendEmail, Students, StudentDelete, LoginUser, SignUpUser, ActivateUser, LogOutUser  # noqa
+    SendEmail, Students, StudentDelete, LoginUser, SignUpUser, ActivateUser, LogOutUser, StudentsViewAPI, \
+    SubjectViewAPI, TeacherViewAPI, ReportCardViewAPI  # noqa
   # noqa
+
+# url адреса для Django Rest Framework
+router = routers.DefaultRouter()
+router.register(r'students/api_view', StudentsViewAPI)
+router.register(r'subject/api_view', SubjectViewAPI)
+router.register(r'teacher/api_view', TeacherViewAPI)
+router.register(r'report_card/api_view', ReportCardViewAPI)
+
 urlpatterns = [
+
+    path('drf/', include(router.urls)),
 
     path('admin/', admin.site.urls),
     path('home/', home, name='home'),
