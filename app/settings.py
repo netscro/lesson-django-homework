@@ -66,9 +66,6 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 
-MEDIA_ROOT = '/home/jeka/PycharmProjects/django-homework/media'
-MEDIA_URL = 'media/'
-
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
@@ -151,10 +148,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+
+MEDIA_ROOT = '/home/jeka/PycharmProjects/django-homework/media'
+MEDIA_URL = 'media/'
+
 
 CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'db+sqlite:///celery_results.sqlite3'
