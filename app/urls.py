@@ -28,10 +28,10 @@ from home.views import MainPage, StudentUpdate, \
 
 # url адреса для Django Rest Framework
 router = routers.DefaultRouter()
-router.register(r'students/api_view', StudentsViewAPI)
-router.register(r'subject/api_view', SubjectViewAPI)
-router.register(r'teacher/api_view', TeacherViewAPI)
-router.register(r'report_card/api_view', ReportCardViewAPI)
+router.register(r'students/api_view', StudentsViewAPI, basename='students_api')
+router.register(r'subject/api_view', SubjectViewAPI, basename='subject_api')
+router.register(r'teacher/api_view', TeacherViewAPI, basename='teacher_api')
+router.register(r'report_card/api_view', ReportCardViewAPI, basename='report_card_api')
 
 urlpatterns = [
 
