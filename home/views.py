@@ -17,6 +17,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 # from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from home.emails import send_email, sing_up_email
@@ -513,9 +514,19 @@ class LogOutUser(View):
 
 # -------------- API ---------------- #
 
+
 class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+    def list(self, request, *args, **kwargs):
+        students = self.queryset
+        student_serializer = self.serializer_class(instance=students,
+                                                   many=True)
+        return Response({
+            'students': student_serializer.data,
+            'counter_of_students': len(student_serializer.data)
+                         })
 
 
 class SubjectViewAPI(ModelViewSet):
