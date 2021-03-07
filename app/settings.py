@@ -102,6 +102,7 @@ DATABASES = {
     }
 }
 
+# кеширование Redis
 # CACHES = {
 #     'default': {'BACKEND': 'django_redis.cache.RedisCache',
 #                 'LOCATION': 'redis://127.0.0.1:6379/1'}
@@ -169,9 +170,16 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'grand.sc.dn@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_PASS')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
