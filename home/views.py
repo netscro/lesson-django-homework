@@ -17,7 +17,6 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 # from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
@@ -520,7 +519,7 @@ class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     pagination_class = PageNumberPagination
-    filterset_fields = ['name']
+    filterset_fields = ('name',)
 
     # переопределение метода list
     # def list(self, request, *args, **kwargs):
@@ -537,18 +536,18 @@ class SubjectViewAPI(ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
     pagination_class = PageNumberPagination
-    filterset_fields = ['title']
+    filterset_fields = ('title',)
 
 
 class TeacherViewAPI(ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = PageNumberPagination
-    filterset_fields = ['name_surname']
+    filterset_fields = ('name_surname',)
 
 
 class ReportCardViewAPI(ModelViewSet):
     queryset = ReportCard.objects.all()
     serializer_class = ReportCardSerializer
     pagination_class = PageNumberPagination
-    filterset_fields = ['report_card']
+    filterset_fields = ('report_card',)
