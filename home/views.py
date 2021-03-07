@@ -520,7 +520,6 @@ class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name']
 
     # переопределение метода list
@@ -538,7 +537,6 @@ class SubjectViewAPI(ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['title']
 
 
@@ -546,7 +544,6 @@ class TeacherViewAPI(ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name_surname']
 
 
@@ -554,5 +551,4 @@ class ReportCardViewAPI(ModelViewSet):
     queryset = ReportCard.objects.all()
     serializer_class = ReportCardSerializer
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['report_card']
