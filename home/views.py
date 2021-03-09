@@ -17,14 +17,17 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 # from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet
 
 from home.emails import send_email, sing_up_email
 from home.forms import ReportCardForm, StudentFilter, StudentForm
-from home.models import ReportCard, Student, UserSignUpForm
-
+from home.models import ReportCard, Student, Subject, Teacher, UserSignUpForm
 # from time import sleep
-
-
+from home.serializers import (ReportCardSerializer, StudentSerializer,
+                              SubjectSerializer, TeacherSerializer)
 
 
 def home(request):  # noqa - # работает через функцию
@@ -435,7 +438,6 @@ class SendEmail(View):
 
 
 class SignUpUser(View):
-
     """
     Create default user:
     user_name = test_user
@@ -445,8 +447,8 @@ class SignUpUser(View):
     def get(self, request):
         sign_up_form = UserSignUpForm()
         return render(request, 'signup.html', context={
-                    'form': sign_up_form
-                })
+            'form': sign_up_form
+        })
 
     def post(self, request):
         sign_up_form = UserSignUpForm(request.POST)
@@ -459,7 +461,7 @@ class SignUpUser(View):
 
             activate_user_url = f'http://localhost/activate/' \
                                 f'{uid}/' \
-                                f'{default_token_generator.make_token(user=user)}/' # noqa E501 line too long
+                                f'{default_token_generator.make_token(user=user)}/'  # noqa E501 line too long
 
             sing_up_email(recipient_list=[user.email],
                           activate_user_url=activate_user_url)
@@ -472,11 +474,9 @@ class SignUpUser(View):
 class ActivateUser(View):
 
     def get(self, request, uid, token):
-
         user = User.objects.get(pk=force_bytes(urlsafe_base64_decode(uid)))
         if not user.is_active and \
                 default_token_generator.check_token(user, token):
-
             user.is_active = True
             user.save()
 
@@ -512,3 +512,52 @@ class LogOutUser(View):
         logout(request)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER',
                                                      reverse('main_page')))
+
+
+# -------------- API ---------------- #
+
+
+class StudentsViewAPI(ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ('name',)
+    ordering_fields = ('name',)
+
+    # переопределение метода list
+    # def list(self, request, *args, **kwargs):
+    #     students = self.queryset
+    #     student_serializer = self.serializer_class(instance=students,
+    #                                                many=True)
+    #     return Response({
+    #         'students': student_serializer.data,
+    #         'counter_of_students': len(student_serializer.data)
+    #                      })
+
+
+class SubjectViewAPI(ModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ('title',)
+    ordering_fields = ('title',)
+
+
+class TeacherViewAPI(ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ('name_surname',)
+    ordering_fields = ('name_surname',)
+
+
+class ReportCardViewAPI(ModelViewSet):
+    queryset = ReportCard.objects.all()
+    serializer_class = ReportCardSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ('report_card',)
+    ordering_fields = ('report_card',)

@@ -39,14 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'home',
+
     'django_filters',
+    'django_extensions',
+
+    'rest_framework',
+    'corsheaders',
+
+    'drf_yasg',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -56,6 +65,9 @@ MIDDLEWARE = [
     'app.middleware.RawDataMiddleware',
     'app.middleware.IdentifyResponseMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 MEDIA_ROOT = '/home/jeka/PycharmProjects/django-homework/media'
 MEDIA_URL = 'media/'
@@ -93,6 +105,7 @@ DATABASES = {
     }
 }
 
+# кеширование Redis
 # CACHES = {
 #     'default': {'BACKEND': 'django_redis.cache.RedisCache',
 #                 'LOCATION': 'redis://127.0.0.1:6379/1'}
@@ -158,9 +171,18 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'grand.sc.dn@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_PASS')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20,
+
+}
