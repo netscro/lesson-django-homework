@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.db import transaction
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
@@ -536,16 +537,10 @@ class StudentsViewAPI(ModelViewSet):
     #         'students': student_serializer.data,
     #         'counter_of_students': len(student_serializer.data)
     #                      })
-
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        report_card = ReportCard()
-        report_card.report_card = uuid.uuid4()
-        report_card.save()
-        serializer.report_card = report_card
-
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
