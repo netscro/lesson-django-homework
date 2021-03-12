@@ -5,7 +5,7 @@ import gender_guesser.detector as gender
 from django.db.models.signals import pre_delete, pre_save  # noqa
 from django.dispatch import receiver
 
-from home.models import Student, ReportCard
+from home.models import ReportCard, Student
 
 
 @receiver(pre_save, sender=Student)
