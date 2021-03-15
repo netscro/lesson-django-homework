@@ -13,16 +13,15 @@ from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 # from django.utils.decorators import method_decorator
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 # from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
 from rest_framework.filters import OrderingFilter
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from home.emails import send_email, sing_up_email
@@ -520,6 +519,7 @@ class LogOutUser(View):
 # -------------- API ---------------- #
 
 
+@method_decorator(transaction.atomic, name='create')
 class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
@@ -537,15 +537,6 @@ class StudentsViewAPI(ModelViewSet):
     #         'students': student_serializer.data,
     #         'counter_of_students': len(student_serializer.data)
     #                      })
-    @transaction.atomic
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data,
-                        status=status.HTTP_201_CREATED,
-                        headers=headers)
 
 
 class SubjectViewAPI(ModelViewSet):
