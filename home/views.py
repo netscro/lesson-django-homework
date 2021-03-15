@@ -6,12 +6,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.db import transaction
 from django.http import (HttpResponse, HttpResponseBadRequest,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 # from django.utils.decorators import method_decorator
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
@@ -517,6 +519,7 @@ class LogOutUser(View):
 # -------------- API ---------------- #
 
 
+@method_decorator(transaction.atomic, name='create')
 class StudentsViewAPI(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer

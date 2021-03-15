@@ -6,7 +6,7 @@ from home.models import ReportCard, Student, Subject, Teacher
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['name', 'surname', 'email', 'is_active']
+        fields = ['name', 'surname', 'email', 'is_active', 'teacher']
 
 
 class SubjectSerializer(serializers.ModelSerializer):
