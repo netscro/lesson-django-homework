@@ -6,7 +6,7 @@ from django.test import TestCase
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from home.models import Student, Teacher
+from home.models import Student, Teacher, Subject
 
 
 class StudentsApiTest(APITestCase):
@@ -77,3 +77,43 @@ class StudentsApiTest(APITestCase):
         self.assertEqual(students.count(), 0)
 
 
+class SubjectApiTest(APITestCase):
+
+    def setUp(self) -> None:
+        Subject.objects.create(title='Python')
+
+    def test_subject_view(self):
+        self.client.get(reverse('subject_api-list'))
+        subjects = Subject.objects.all()
+        self.assertEqual(subjects.count(), 1)
+
+    def test_subject_create(self):
+        response = self.client.post(reverse('subject_api-list'), {
+            'title': 'Java',
+        })
+
+        base_response = {
+            'id': 2,
+            'title': 'Java',
+        }
+        self.assertEqual(response.json(), base_response)
+
+    def test_subject_update(self):
+        subjects = Subject.objects.all()
+        response = self.client.put(reverse('subject_api-detail', kwargs={'pk': subjects[0].id}), {
+            'title': 'JavaScript'
+        })
+
+        base_response = {
+            'id': 1,
+            'title': 'JavaScript',
+        }
+        self.assertEqual(response.json(), base_response)
+
+    def test_subject_delete(self):
+        subjects = Subject.objects.all()
+        self.assertEqual(subjects.count(), 1)
+
+        self.client.delete(reverse('subject_api-detail', kwargs={'pk': subjects[0].id}))
+
+        self.assertEqual(subjects.count(), 0)
