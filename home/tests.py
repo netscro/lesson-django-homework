@@ -160,3 +160,46 @@ class ReportCardApiTest(APITestCase):
 
         self.client.delete(reverse('report_card_api-detail', kwargs={'pk': report_cards[0].id}))
         self.assertEqual(report_cards.count(), 0)
+
+
+class TeacherApiTest(APITestCase):
+
+    def setUp(self) -> None:
+        Teacher.objects.create(name_surname='Rick Sanchez')
+
+    def test_teacher_view(self):
+        self.client.get(reverse('teacher_api-list'))
+        teachers = Teacher.objects.all()
+        self.assertEqual(teachers.count(), 1)
+
+    def test_teacher_create(self):
+        response = self.client.post(reverse('teacher_api-list'), {
+            'name_surname': 'Morty Smith'
+        })
+
+        base_response = {
+            'id': 2,
+            'name_surname': 'Morty Smith'
+        }
+
+        self.assertEqual(response.json(), base_response)
+
+    def test_teacher_update(self):
+        teachers = Teacher.objects.all()
+        response = self.client.put(reverse('teacher_api-detail', kwargs={'pk': teachers[0].id}), {
+            'name_surname': 'Morty Smith'
+        })
+
+        base_response = {
+            'id': 1,
+            'name_surname': 'Morty Smith'
+        }
+
+        self.assertEqual(response.json(), base_response)
+
+    def test_teacher_delete(self):
+        teachers = Teacher.objects.all()
+        self.assertEqual(teachers.count(), 1)
+
+        self.client.delete(reverse('teacher_api-detail', kwargs={'pk': teachers[0].id}))
+        self.assertEqual(teachers.count(), 0)
