@@ -11,28 +11,39 @@ from home.models import Student, Teacher
 
 class StudentsApiTest(APITestCase):
 
+    def setUp(self) -> None:
+        Teacher.objects.create(name_surname='Ted')
+        Student.objects.create(name='One',
+                               surname='Student',)
+
     def test_students_list_view(self):
         response = self.client.get(reverse('students_api-list'))
         base_response = {
-            'count': 0,
+            'count': 1,
             'next': None,
             'previous': None,
-            'results': [],
+            'results': [{
+                'email': None,
+                'is_active': True,
+                'name': 'One',
+                'surname': 'Student',
+                'teacher': []
+            }]
         }
+
         self.assertEqual(response.json(), base_response)
 
     def test_student_create(self):
-        Teacher.objects.create(name_surname='Ted')
         response = self.client.post(reverse('students_api-list'),
                                     {
-                                        'name': 'One',
+                                        'name': 'Two',
                                         'surname': 'student',
                                         'teacher': [1],
                                     })
         base_response = {
             'email': None,
             'is_active': False,
-            'name': 'One',
+            'name': 'Two',
             'surname': 'student',
             'teacher': [1],
         }
@@ -40,9 +51,6 @@ class StudentsApiTest(APITestCase):
         self.assertEqual(response.json(), base_response)
 
     def test_student_update(self):
-        Teacher.objects.create(name_surname='Ted')
-        Student.objects.create(name='One',
-                               surname='Student',)
         students = Student.objects.all()
         response = self.client.put(reverse('students_api-detail', kwargs={'pk': students[0].id}),
                                    {
@@ -61,8 +69,6 @@ class StudentsApiTest(APITestCase):
         self.assertEqual(response.json(), base_response)
 
     def test_student_delete(self):
-        Student.objects.create(name='One',
-                               surname='Student',)
         students = Student.objects.all()
         self.assertEqual(students.count(), 1)
 
