@@ -6,7 +6,7 @@ from django.test import TestCase
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from home.models import Student, Teacher, Subject
+from home.models import Student, Teacher, Subject, ReportCard
 
 
 class StudentsApiTest(APITestCase):
@@ -117,3 +117,46 @@ class SubjectApiTest(APITestCase):
         self.client.delete(reverse('subject_api-detail', kwargs={'pk': subjects[0].id}))
 
         self.assertEqual(subjects.count(), 0)
+
+
+class ReportCardApiTest(APITestCase):
+
+    def setUp(self) -> None:
+        ReportCard.objects.create(report_card='zachetka')
+
+    def test_report_card_view(self):
+        self.client.get(reverse('report_card_api-list'))
+        report_cards = ReportCard.objects.all()
+        self.assertEqual(report_cards.count(), 1)
+
+    def test_report_card_create(self):
+        response = self.client.post(reverse('report_card_api-list'), {
+            'report_card': 'zachetka_v_2_0',
+        })
+
+        print(response.json())
+
+        base_response = {
+            'id': 2,
+            'report_card': 'zachetka_v_2_0',
+        }
+        self.assertEqual(response.json(), base_response)
+
+    def test_report_cart_update(self):
+        report_cards = ReportCard.objects.all()
+        response = self.client.put(reverse('report_card_api-detail', kwargs={'pk': report_cards[0].id}), {
+            'report_card': 'zachetka_v_2_0'
+        })
+
+        base_response = {
+            'id': 1,
+            'report_card': 'zachetka_v_2_0',
+        }
+        self.assertEqual(response.json(), base_response)
+
+    def test_report_card_delete(self):
+        report_cards = ReportCard.objects.all()
+        self.assertEqual(report_cards.count(), 1)
+
+        self.client.delete(reverse('report_card_api-detail', kwargs={'pk': report_cards[0].id}))
+        self.assertEqual(report_cards.count(), 0)
