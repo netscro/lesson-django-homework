@@ -64,12 +64,10 @@ class StudentsApiTest(APITestCase):
         Student.objects.create(name='One',
                                surname='Student',)
         students = Student.objects.all()
-        students_count_created = students.count()
-        self.assertEqual(students_count_created, 1)
+        self.assertEqual(students.count(), 1)
 
         self.client.delete(reverse('students_api-detail', kwargs={'pk': students[0].id}))
 
-        students_count = students.count()
-        self.assertEqual(students_count, 0)
+        self.assertEqual(students.count(), 0)
 
 
