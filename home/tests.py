@@ -1,12 +1,9 @@
-from unittest import skip
-
-from django.test import TestCase
 
 # Create your tests here.
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from home.models import Student, Teacher, Subject, ReportCard
+from home.models import ReportCard, Student, Subject, Teacher
 
 
 class StudentsApiTest(APITestCase):
@@ -52,7 +49,8 @@ class StudentsApiTest(APITestCase):
 
     def test_student_update(self):
         students = Student.objects.all()
-        response = self.client.put(reverse('students_api-detail', kwargs={'pk': students[0].id}),
+        response = self.client.put(reverse('students_api-detail',
+                                           kwargs={'pk': students[0].id}),
                                    {
                                         'name': 'Two',
                                         'surname': 'student',
@@ -72,7 +70,8 @@ class StudentsApiTest(APITestCase):
         students = Student.objects.all()
         self.assertEqual(students.count(), 1)
 
-        self.client.delete(reverse('students_api-detail', kwargs={'pk': students[0].id}))
+        self.client.delete(reverse('students_api-detail',
+                                   kwargs={'pk': students[0].id}))
 
         self.assertEqual(students.count(), 0)
 
@@ -88,7 +87,8 @@ class SubjectApiTest(APITestCase):
         self.assertEqual(subjects.count(), 1)
 
     def test_subject_create(self):
-        response = self.client.post(reverse('subject_api-list'), {
+        response = self.client.post(reverse('subject_api-list'),
+                                    {
             'title': 'Java',
         })
 
@@ -100,7 +100,9 @@ class SubjectApiTest(APITestCase):
 
     def test_subject_update(self):
         subjects = Subject.objects.all()
-        response = self.client.put(reverse('subject_api-detail', kwargs={'pk': subjects[0].id}), {
+        response = self.client.put(reverse('subject_api-detail',
+                                           kwargs={'pk': subjects[0].id}),
+                                   {
             'title': 'JavaScript'
         })
 
@@ -114,7 +116,8 @@ class SubjectApiTest(APITestCase):
         subjects = Subject.objects.all()
         self.assertEqual(subjects.count(), 1)
 
-        self.client.delete(reverse('subject_api-detail', kwargs={'pk': subjects[0].id}))
+        self.client.delete(reverse('subject_api-detail',
+                                   kwargs={'pk': subjects[0].id}))
 
         self.assertEqual(subjects.count(), 0)
 
@@ -130,11 +133,10 @@ class ReportCardApiTest(APITestCase):
         self.assertEqual(report_cards.count(), 1)
 
     def test_report_card_create(self):
-        response = self.client.post(reverse('report_card_api-list'), {
+        response = self.client.post(reverse('report_card_api-list'),
+                                    {
             'report_card': 'zachetka_v_2_0',
         })
-
-        print(response.json())
 
         base_response = {
             'id': 2,
@@ -144,7 +146,9 @@ class ReportCardApiTest(APITestCase):
 
     def test_report_cart_update(self):
         report_cards = ReportCard.objects.all()
-        response = self.client.put(reverse('report_card_api-detail', kwargs={'pk': report_cards[0].id}), {
+        response = self.client.put(reverse('report_card_api-detail',
+                                           kwargs={'pk': report_cards[0].id}),
+                                   {
             'report_card': 'zachetka_v_2_0'
         })
 
@@ -158,7 +162,8 @@ class ReportCardApiTest(APITestCase):
         report_cards = ReportCard.objects.all()
         self.assertEqual(report_cards.count(), 1)
 
-        self.client.delete(reverse('report_card_api-detail', kwargs={'pk': report_cards[0].id}))
+        self.client.delete(reverse('report_card_api-detail',
+                                   kwargs={'pk': report_cards[0].id}))
         self.assertEqual(report_cards.count(), 0)
 
 
@@ -186,7 +191,9 @@ class TeacherApiTest(APITestCase):
 
     def test_teacher_update(self):
         teachers = Teacher.objects.all()
-        response = self.client.put(reverse('teacher_api-detail', kwargs={'pk': teachers[0].id}), {
+        response = self.client.put(reverse('teacher_api-detail',
+                                           kwargs={'pk': teachers[0].id}),
+                                   {
             'name_surname': 'Morty Smith'
         })
 
@@ -201,5 +208,6 @@ class TeacherApiTest(APITestCase):
         teachers = Teacher.objects.all()
         self.assertEqual(teachers.count(), 1)
 
-        self.client.delete(reverse('teacher_api-detail', kwargs={'pk': teachers[0].id}))
+        self.client.delete(reverse('teacher_api-detail',
+                                   kwargs={'pk': teachers[0].id}))
         self.assertEqual(teachers.count(), 0)
