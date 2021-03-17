@@ -41,27 +41,28 @@ class StudentsApiTest(APITestCase):
 
         self.assertEqual(response.json(), base_response)
 
-    # def test_student_update(self):
-    #     Teacher.objects.create(name_surname='Ted')
-    #     Student.objects.create(name='One',
-    #                            surname='Student',
-    #                            )
-    #     students = Student.objects.all()
-    #     response = self.client.put(reverse('students_api-list', kwargs={'pk': students[0].id}),
-    #                                {
-    #                                     'name': 'Two',
-    #                                     'surname': 'student',
-    #                                     'teacher': [1],
-    #                                })
-    #     base_response = {
-    #         'email': None,
-    #         'is_active': False,
-    #         'name': 'One',
-    #         'surname': 'student',
-    #         'teacher': [1],
-    #     }
-    #
-    #     self.assertEqual(response.json(), base_response)
+    @skip
+    def test_student_update(self):
+        Teacher.objects.create(name_surname='Ted')
+        Student.objects.create(name='One',
+                               surname='Student',
+                               )
+        students = Student.objects.all()
+        response = self.client.put(reverse('students_api-detail', kwargs={'pk': students[0].id}),
+                                   {
+                                        'name': 'Two',
+                                        'surname': 'student',
+                                        'teacher': [1],
+                                   })
+        base_response = {
+            'email': None,
+            'is_active': False,
+            'name': 'Two',
+            'surname': 'student',
+            'teacher': [1],
+        }
+
+        self.assertEqual(response.json(), base_response)
 
 
 
