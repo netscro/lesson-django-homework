@@ -1,6 +1,5 @@
 
 # Create your tests here.
-from unittest import skip
 
 import freezegun
 from rest_framework.reverse import reverse
