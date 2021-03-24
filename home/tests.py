@@ -1,11 +1,15 @@
 
 # Create your tests here.
+from unittest import skip
+
+import freezegun
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
 from home.models import ReportCard, Student, Subject, Teacher
 
 
+@freezegun.freeze_time('1987-06-07 00:00:00')
 class StudentsApiTest(APITestCase):
 
     def setUp(self) -> None:
@@ -20,11 +24,13 @@ class StudentsApiTest(APITestCase):
             'next': None,
             'previous': None,
             'results': [{
+                'created_at': '1987-06-07T00:00:00',
                 'email': None,
                 'is_active': True,
                 'name': 'One',
                 'surname': 'Student',
-                'teacher': []
+                'teacher': [],
+                'updated_at': '1987-06-07T00:00:00',
             }]
         }
 
@@ -38,11 +44,13 @@ class StudentsApiTest(APITestCase):
                                         'teacher': [1],
                                     })
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'email': None,
             'is_active': False,
             'name': 'Two',
             'surname': 'student',
             'teacher': [1],
+            'updated_at': '1987-06-07T00:00:00',
         }
 
         self.assertEqual(response.json(), base_response)
@@ -57,11 +65,13 @@ class StudentsApiTest(APITestCase):
                                         'teacher': [1],
                                    })
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'email': None,
             'is_active': False,
             'name': 'Two',
             'surname': 'student',
             'teacher': [1],
+            'updated_at': '1987-06-07T00:00:00',
         }
 
         self.assertEqual(response.json(), base_response)
@@ -76,6 +86,7 @@ class StudentsApiTest(APITestCase):
         self.assertEqual(students.count(), 0)
 
 
+@freezegun.freeze_time('1987-06-07 00:00:00')
 class SubjectApiTest(APITestCase):
 
     def setUp(self) -> None:
@@ -93,8 +104,10 @@ class SubjectApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 2,
             'title': 'Java',
+            'updated_at': '1987-06-07T00:00:00',
         }
         self.assertEqual(response.json(), base_response)
 
@@ -107,8 +120,10 @@ class SubjectApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 1,
             'title': 'JavaScript',
+            'updated_at': '1987-06-07T00:00:00',
         }
         self.assertEqual(response.json(), base_response)
 
@@ -122,6 +137,7 @@ class SubjectApiTest(APITestCase):
         self.assertEqual(subjects.count(), 0)
 
 
+@freezegun.freeze_time('1987-06-07 00:00:00')
 class ReportCardApiTest(APITestCase):
 
     def setUp(self) -> None:
@@ -139,8 +155,10 @@ class ReportCardApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 2,
             'report_card': 'zachetka_v_2_0',
+            'updated_at': '1987-06-07T00:00:00',
         }
         self.assertEqual(response.json(), base_response)
 
@@ -153,8 +171,10 @@ class ReportCardApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 1,
             'report_card': 'zachetka_v_2_0',
+            'updated_at': '1987-06-07T00:00:00',
         }
         self.assertEqual(response.json(), base_response)
 
@@ -167,6 +187,7 @@ class ReportCardApiTest(APITestCase):
         self.assertEqual(report_cards.count(), 0)
 
 
+@freezegun.freeze_time('1987-06-07 00:00:00')
 class TeacherApiTest(APITestCase):
 
     def setUp(self) -> None:
@@ -183,8 +204,10 @@ class TeacherApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 2,
-            'name_surname': 'Morty Smith'
+            'name_surname': 'Morty Smith',
+            'updated_at': '1987-06-07T00:00:00',
         }
 
         self.assertEqual(response.json(), base_response)
@@ -198,8 +221,10 @@ class TeacherApiTest(APITestCase):
         })
 
         base_response = {
+            'created_at': '1987-06-07T00:00:00',
             'id': 1,
-            'name_surname': 'Morty Smith'
+            'name_surname': 'Morty Smith',
+            'updated_at': '1987-06-07T00:00:00',
         }
 
         self.assertEqual(response.json(), base_response)
