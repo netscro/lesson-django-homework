@@ -28,6 +28,8 @@ class Student(models.Model):
     report_card = models.OneToOneField('home.ReportCard',
                                        on_delete=models.CASCADE,
                                        null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
 
 class Subject(models.Model):
@@ -37,6 +39,8 @@ class Subject(models.Model):
     """
     id = models.AutoField(primary_key=True) # noqa - A003
     title = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
@@ -49,6 +53,8 @@ class Teacher(models.Model):
     """
     id = models.AutoField(primary_key=True) # noqa - A003
     name_surname = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.name_surname
@@ -61,6 +67,8 @@ class ReportCard(models.Model):
     """
     id = models.AutoField(primary_key=True) # noqa - A003
     report_card = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.report_card
